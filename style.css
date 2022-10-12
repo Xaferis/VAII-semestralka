@@ -94,6 +94,24 @@ footer .container .row a {
     vertical-align: baseline;
 }
 
+.category-image-div {
+    height: 140px;
+    width: 140px;
+    padding-top: 20px;
+    background-color: darkseagreen;
+    border-radius: 50%;
+}
+
+.category-image-div img{
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#category .list-group {
+    list-style-type: none;
+}
 
 
 
