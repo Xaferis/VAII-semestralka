@@ -57,20 +57,20 @@ footer .container .row a {
 }
 
 .card-img-overlay h2 {
-    display: flex;
+    /*display: flex;*/
     max-width: 100%;
     width: 480px;
-    align-items: flex-end;
+    /*align-items: flex-end;*/
     color: rgb(255, 255, 255);
     margin-block: 30px 25px;
 }
 
 .card-img-overlay h4 {
-    display: flex;
+    /*display: flex;*/
     max-width: 100%;
     width: 335px;
     font-size: small;
-    align-items: flex-end;
+    /*align-items: flex-end;*/
     color: rgb(255, 255, 255);
     opacity: 0.7;
     margin-block: 30px;
@@ -124,7 +124,9 @@ footer .container .row a {
     min-width: 100px;
 }
 
-#category-main h5 {
+#category-main h5,
+#main-container h5,
+#main-container h3 {
     font-weight: bold;
 }
 
