@@ -92,6 +92,7 @@ footer .container .row a {
     text-align: center;
     text-decoration: none;
     vertical-align: baseline;
+    min-width: 100px;
 }
 
 .category-image-div {
@@ -109,9 +110,32 @@ footer .container .row a {
     display: block;
 }
 
-#category .list-group {
+#category .list-group,
+#sticky-sidebar .list-group {
     list-style-type: none;
 }
+
+.active {
+    background-color: darkseagreen !important;
+    border-color: darkseagreen !important;
+}
+
+#sticky-sidebar {
+    min-width: 100px;
+}
+
+#category-main h5 {
+    font-weight: bold;
+}
+
+.category-card .add-offer-button {
+    margin:0;
+    padding: 8px;
+    top:8px;
+    bottom:8px;
+}
+
+
 
 
 
