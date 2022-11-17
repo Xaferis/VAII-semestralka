@@ -10,7 +10,7 @@ use App\Core\Responses\Response;
  * Example class of a controller
  * @package App\Controllers
  */
-class AdminController extends AControllerBase
+class ProfileController extends AControllerBase
 {
     /**
      * Authorize controller actions

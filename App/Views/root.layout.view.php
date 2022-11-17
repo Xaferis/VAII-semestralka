@@ -16,6 +16,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="public/css/styl.css">
     <script src="public/js/script.js"></script>
 </head>
@@ -32,14 +33,53 @@
                         <a class="nav-link" aria-current="page" href="?c=category">Kategórie</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Pridať inzerát</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="?c=auth">Prihlásiť sa</a>
-                    </li>
-                </ul>
+
+
+                <?php if ($auth->isLogged()) { ?>
+                    <span class="navbar-text">Prihlaseny ako: <b><?= $auth->getLoggedUserName() ?></b></span>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#">Pridať inzerát</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#">Moje inzeráty</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-gear"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="?c=profile">Moj profil</a></li>
+                                <li><a class="dropdown-item" href="?c=auth&a=logout">Odhlasit sa</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                <?php } else { ?>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="?c=auth">Prihlásiť sa</a>
+                        </li>
+                    </ul>
+                <?php } ?>
+
+
+<!--                <ul class="navbar-nav ms-auto">-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" aria-current="page" href="#">Pridať inzerát</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" aria-current="page" href="?c=auth">Prihlásiť sa</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item dropdown">-->
+<!--                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                            <i class="bi bi-gear"></i>-->
+<!--                        </a>-->
+<!--                        <ul class="dropdown-menu">-->
+<!--                            <li><a class="dropdown-item" href="?c=admin">Moj profil</a></li>-->
+<!--                            <li><a class="dropdown-item" href="?c=auth&a=logout">Odhlasit sa</a></li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                </ul>-->
             </div>
         </div>
     </nav>

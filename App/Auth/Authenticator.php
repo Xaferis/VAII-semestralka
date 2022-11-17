@@ -3,6 +3,7 @@
 namespace App\Auth;
 
 use App\Core\IAuthenticator;
+use App\Models\User;
 
 class Authenticator implements IAuthenticator
 {
@@ -14,31 +15,43 @@ class Authenticator implements IAuthenticator
 
     function login($userLogin, $pass): bool
     {
-        // TODO: Implement login() method.
+        $user = User::getAll("email = ?", [$userLogin]);
+        if (count($user) == 0) {
+            return false;
+        }
+        if ($userLogin == $user[0]->getEmail() && password_verify($pass, $user[0]->getPasswordHash())) {
+            $_SESSION['user'] = $user[0]->getName();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function logout(): void
     {
-        // TODO: Implement logout() method.
+        if (isset($_SESSION["user"])) {
+            unset($_SESSION["user"]);
+            session_destroy();
+        }
     }
 
     function getLoggedUserName(): string
     {
-        // TODO: Implement getLoggedUserName() method.
+        return isset($_SESSION['user']) ? $_SESSION['user'] : throw new \Exception("User not logged in");
     }
 
     function getLoggedUserId(): mixed
     {
-        // TODO: Implement getLoggedUserId() method.
+        return $_SESSION['user'];
     }
 
     function getLoggedUserContext(): mixed
     {
-        // TODO: Implement getLoggedUserContext() method.
+        return null;
     }
 
     function isLogged(): bool
     {
-        // TODO: Implement isLogged() method.
+        return isset($_SESSION['user']) && $_SESSION['user'] != null;
     }
 }
