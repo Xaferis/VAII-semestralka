@@ -1,5 +1,4 @@
 <?php
-$layout = 'auth';
 /** @var Array $data */
 ?>
 <div class="container">
@@ -13,15 +12,16 @@ $layout = 'auth';
                     </div>
                     <form class="form-signin" method="post" action="<?= \App\Config\Configuration::LOGIN_URL ?>">
                         <div class="form-label-group mb-3">
-                            <input name="login" type="text" id="login" class="form-control" placeholder="Login"
+                            <input name="login" type="text" id="login" class="form-control" placeholder="E-mail"
                                    required autofocus>
                         </div>
 
                         <div class="form-label-group mb-3">
                             <input name="password" type="password" id="password" class="form-control"
-                                   placeholder="Password" required>
+                                   placeholder="Heslo" required>
                         </div>
                         <div class="text-center">
+                            <p>Nemas ucet? <a href="?c=auth&a=register">Registruj sa</a></p>
                             <button class="btn btn-primary" type="submit" name="submit">Prihlásiť
                             </button>
                         </div>
