@@ -11,14 +11,14 @@
                         <?= @$data['message'] ?>
                     </div>
                     <form class="form-signin" method="post" action="<?= \App\Config\Configuration::LOGIN_URL ?>">
-                        <div class="form-label-group mb-3">
-                            <input name="login" type="text" id="login" class="form-control" placeholder="E-mail"
-                                   required autofocus>
+                        <div class="form-floating mb-3">
+                            <input name="login" type="email" id="login" class="form-control" required>
+                            <label for="login">E-mail</label>
                         </div>
 
-                        <div class="form-label-group mb-3">
-                            <input name="password" type="password" id="password" class="form-control"
-                                   placeholder="Heslo" required>
+                        <div class="form-floating mb-3">
+                            <input name="password" type="password" id="password" class="form-control" required>
+                            <label for="password">Heslo</label>
                         </div>
                         <div class="text-center">
                             <p>Nemas ucet? <a href="?c=auth&a=register">Registruj sa</a></p>

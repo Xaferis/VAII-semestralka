@@ -20,7 +20,8 @@ class Authenticator implements IAuthenticator
             return false;
         }
         if ($userLogin == $user[0]->getEmail() && password_verify($pass, $user[0]->getPasswordHash())) {
-            $_SESSION['user'] = $user[0]->getName();
+            $_SESSION['user_name'] = $user[0]->getName();
+            $_SESSION['user_id'] = $user[0]->getId();
             return true;
         } else {
             return false;
@@ -29,20 +30,21 @@ class Authenticator implements IAuthenticator
 
     function logout(): void
     {
-        if (isset($_SESSION["user"])) {
-            unset($_SESSION["user"]);
+        if (isset($_SESSION["user_name"]) || isset($_SESSION['user_id'])) {
+            unset($_SESSION["user_name"]);
+            unset($_SESSION["user_id"]);
             session_destroy();
         }
     }
 
     function getLoggedUserName(): string
     {
-        return isset($_SESSION['user']) ? $_SESSION['user'] : throw new \Exception("User not logged in");
+        return isset($_SESSION['user_name']) ? $_SESSION['user_name'] : throw new \Exception("User not logged in");
     }
 
     function getLoggedUserId(): mixed
     {
-        return $_SESSION['user'];
+        return isset($_SESSION['user_id']) ? $_SESSION['user_id'] : throw new \Exception("User not logged in");
     }
 
     function getLoggedUserContext(): mixed
@@ -52,6 +54,6 @@ class Authenticator implements IAuthenticator
 
     function isLogged(): bool
     {
-        return isset($_SESSION['user']) && $_SESSION['user'] != null;
+        return isset($_SESSION['user_name']) && $_SESSION['user_name'] != null;
     }
 }

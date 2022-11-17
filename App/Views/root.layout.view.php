@@ -39,10 +39,10 @@
                     <span class="navbar-text">Prihlaseny ako: <b><?= $auth->getLoggedUserName() ?></b></span>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">Pridať inzerát</a>
+                            <a class="nav-link" aria-current="page" href="?c=posts&a=create">Pridať inzerát</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">Moje inzeráty</a>
+                            <a class="nav-link" aria-current="page" href="?c=posts">Moje inzeráty</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

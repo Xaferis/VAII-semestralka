@@ -145,6 +145,16 @@ footer .container .row a {
     border-color: darkseagreen !important;
 }
 
+textarea[type="text"]:focus,
+select[type="text"]:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: rgb(143, 188, 143);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
+    outline: 0 none;
+}
+
 
 
 
