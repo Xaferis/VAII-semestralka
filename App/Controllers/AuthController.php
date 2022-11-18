@@ -51,25 +51,35 @@ class AuthController extends AControllerBase
             return $this->redirect('?c=home');
         }
         $formData = $this->app->getRequest()->getPost();
-        $data = [];
         if (isset($formData['submit'])) {
-            $isEmailTaken = User::getAll('email = ?', [$formData['login']]);
-            if (count($isEmailTaken) == 0) {
-                if (($formData['password'] === $formData['password_check'])) {
-                    $user = new User();
-                    $user->setEmail($formData['login']);
-                    $user->setPasswordHash(password_hash($formData['password'], PASSWORD_DEFAULT));
-                    $user->setName($formData['name']);
-                    $user->save();
-                    return $this->redirect('?c=auth&a=login');
-                } else {
-                    $data = ['message' => 'Hesla sa nezhoduju!'];
-                }
-            } else {
-                $data = ['message' => 'Ucet s danym e-mailom uz existuje!'];
+            if (!$formData['login'] || !$formData['name'] || !$formData['password'] || !$formData['password_check']) {
+                return $this->html(['message' => 'Jedno alebo viac polia nie su vyplnene!']);
             }
+            if (!filter_var($formData['login'], FILTER_VALIDATE_EMAIL)) {
+                return $this->html(['message' => 'Nespravny format e-mailu!']);
+            }
+            $isEmailTaken = User::getAll('email = ?', [$formData['login']]);
+            if (count($isEmailTaken) != 0) {
+                return $this->html(['message' => 'Ucet s danym e-mailom uz existuje!']);
+            }
+            if (strcmp($formData['password'],$formData['password_check']) != 0) {
+                return $this->html(['message' => 'Hesla sa nezhoduju!']);
+            }
+            if (strlen('password') < 7) {
+                return $this->html(['message' => 'Heslo musi mat aspon 7 znakov!']);
+            }
+            if (strlen($formData['name']) < 3) {
+                return $this->html(['message' => 'Meno musi mat aspon 3 znaky!']);
+            }
+
+            $user = new User();
+            $user->setEmail($formData['login']);
+            $user->setPasswordHash(password_hash($formData['password'], PASSWORD_DEFAULT));
+            $user->setName($formData['name']);
+            $user->save();
+            return $this->redirect('?c=auth&a=login');
         }
-        return $this->html($data);
+        return $this->html([]);
     }
 
     /**

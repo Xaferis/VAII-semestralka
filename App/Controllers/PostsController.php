@@ -23,45 +23,62 @@ class PostsController extends AControllerBase
 
     public function create(): Response
     {
-        return $this->html(['post' => new Post(), 'categories' => Category::getAll()]);
+        return $this->html([
+            'post' => new Post(),
+            'categories' => Category::getAll(),
+            'title' => 'Pridanie inzeratu',
+            'button' => 'Vytvorit inzerat'
+        ]);
     }
 
-    public function store() {
+    public function store()
+    {
         $id = $this->request()->getValue('id');
         $post = ($id ? Post::getOne($id) : new Post());
 
         $title = $this->request()->getValue('title');
         $description = $this->request()->getValue('description');
         $categoryID = $this->request()->getValue('category');
-        $price = str_replace(",",".", $this->request()->getValue('price'));
+        $price = str_replace(",", ".", $this->request()->getValue('price'));
 
-        if ($title &&
-            $description &&
-            $categoryID &&
-            $price &&
-            is_numeric($price)
-        ) {
-            $post->setTitle($title);
-            $post->setDescription($description);
-            $post->setCategoryId($categoryID);
-            $post->setPrice($price);
-
-            $post->setUserId($this->app->getAuth()->getLoggedUserId());
-            $post->save();
-
-            return $this->redirect("?c=posts");
+        if (!$title || !$description || !$categoryID || !$price) {
+            return $id
+                ? $this->redirect("?c=posts&a=edit&id=".$id)
+                : $this->redirect("?c=posts&a=create");
+        }
+        if (!is_numeric($price)) {
+            return $id
+                ? $this->redirect("?c=posts&a=edit&id=".$id)
+                : $this->redirect("?c=posts&a=create");
         }
 
-        return $this->redirect("?c=posts&a=create");
+        $post->setTitle($title);
+        $post->setDescription($description);
+        $post->setCategoryId($categoryID);
+        $post->setPrice($price);
+
+        $post->setUserId($this->app->getAuth()->getLoggedUserId());
+        $post->save();
+
+        return $this->redirect("?c=posts");
     }
 
     public function edit()
     {
         $post = Post::getOne($this->request()->getValue('id'));
+        if (!$post || $post->getUserId() != $this->app->getAuth()->getLoggedUserId()) {
+            return $this->redirect("?c=posts&a=create");
+        }
         $categories = Category::getAll("id <> ?", [$post->getCategoryId()]);
         array_unshift($categories, Category::getOne($post->getCategoryId()));
 
-        return $this->html(['post' => $post, 'categories' => $categories], 'create');
+        return $this->html([
+            'post' => $post,
+            'categories' => $categories,
+            'title' => 'Uprava inzeratu',
+            'button' => 'Ulozit zmeny'
+        ],
+            'create');
     }
 
     public function delete()
