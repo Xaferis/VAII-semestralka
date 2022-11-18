@@ -10,26 +10,30 @@
                     <div class="text-center text-danger mb-3">
                         <?= @$data['message'] ?>
                     </div>
-                    <form class="form-signin" method="post" action="?c=auth&a=register">
+                    <form class="needs-validation" method="post" action="?c=auth&a=register" novalidate>
                         <div class="form-floating mb-3">
-                            <input name="login" type="text" id="login" class="form-control" required>
+                            <input name="login" type="email" id="login" class="form-control" required>
                             <label for="login">E-mail</label>
+                            <div class="invalid-feedback">Nespravny format e-mailu!</div>
                         </div>
                         <div class="form-floating mb-3">
                             <input name="name" type="text" id="name" class="form-control" required>
                             <label for="name">Meno</label>
+                            <div class="invalid-feedback">Zadaj prosim meno!</div>
                         </div>
                         <div class="form-floating mb-3">
                             <input name="password" type="password" id="password" class="form-control" required>
                             <label for="password">Heslo</label>
+                            <div class="invalid-feedback">Zadaj prosim heslo!</div>
                         </div>
                         <div class="form-floating mb-3">
                             <input name="password_check" type="password" id="password_check" class="form-control" required>
                             <label for="password_check">Znova heslo</label>
+                            <div class="invalid-feedback">Zadaj prosim znova heslo!</div>
                         </div>
                         <div class="text-center">
                             <p>Uz mas ucet? <a href="?c=auth&a=login">Prihlas sa</a></p>
-                            <button class="btn btn-primary" type="submit" name="submit">Zaregistruj sa
+                            <button class="btn btn-primary" type="submit" name="submit" disabled>Zaregistruj sa
                             </button>
                         </div>
                     </form>

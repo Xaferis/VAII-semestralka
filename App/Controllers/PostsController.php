@@ -30,16 +30,29 @@ class PostsController extends AControllerBase
         $id = $this->request()->getValue('id');
         $post = ($id ? Post::getOne($id) : new Post());
 
-        //overenie
-        $post->setTitle($this->request()->getValue('title'));
-        $post->setDescription($this->request()->getValue('description'));
-        $post->setCategoryId($this->request()->getValue('category'));
-        $post->setPrice($this->request()->getValue('price'));
-        $post->setUserId($this->app->getAuth()->getLoggedUserId());
-        $post->save();
+        $title = $this->request()->getValue('title');
+        $description = $this->request()->getValue('description');
+        $categoryID = $this->request()->getValue('category');
+        $price = str_replace(",",".", $this->request()->getValue('price'));
 
-        return $this->redirect("?c=posts");
+        if ($title &&
+            $description &&
+            $categoryID &&
+            $price &&
+            is_numeric($price)
+        ) {
+            $post->setTitle($title);
+            $post->setDescription($description);
+            $post->setCategoryId($categoryID);
+            $post->setPrice($price);
 
+            $post->setUserId($this->app->getAuth()->getLoggedUserId());
+            $post->save();
+
+            return $this->redirect("?c=posts");
+        }
+
+        return $this->redirect("?c=posts&a=create");
     }
 
     public function edit()
@@ -54,7 +67,10 @@ class PostsController extends AControllerBase
     public function delete()
     {
         $post = Post::getOne($this->request()->getValue('id'));
-        $post->delete();
+
+        if ($post) {
+            $post->delete();
+        }
 
         return $this->redirect("?c=posts");
     }

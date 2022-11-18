@@ -1,4 +1,4 @@
-<div class="container mb-3" id="main-container">
+<div>
     <div class="card text-white border-0">
         <img src="https://offero-cdn.s3.eu-central-1.amazonaws.com/homeBanner/shopping_mirror.png" class="card-img" alt="Image">
         <div class="card-img-overlay">

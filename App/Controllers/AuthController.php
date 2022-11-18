@@ -54,15 +54,19 @@ class AuthController extends AControllerBase
         $data = [];
         if (isset($formData['submit'])) {
             $isEmailTaken = User::getAll('email = ?', [$formData['login']]);
-            if (count($isEmailTaken) == 0 && ($formData['password'] === $formData['password_check'])) {
-                $user = new User();
-                $user->setEmail($formData['login']);
-                $user->setPasswordHash(password_hash($formData['password'], PASSWORD_DEFAULT));
-                $user->setName($formData['name']);
-                $user->save();
-                return $this->redirect('?c=auth&a=login');
+            if (count($isEmailTaken) == 0) {
+                if (($formData['password'] === $formData['password_check'])) {
+                    $user = new User();
+                    $user->setEmail($formData['login']);
+                    $user->setPasswordHash(password_hash($formData['password'], PASSWORD_DEFAULT));
+                    $user->setName($formData['name']);
+                    $user->save();
+                    return $this->redirect('?c=auth&a=login');
+                } else {
+                    $data = ['message' => 'Hesla sa nezhoduju!'];
+                }
             } else {
-                $data = ['message' => 'Dakde chyba'];
+                $data = ['message' => 'Ucet s danym e-mailom uz existuje!'];
             }
         }
         return $this->html($data);
@@ -77,4 +81,5 @@ class AuthController extends AControllerBase
         $this->app->getAuth()->logout();
         return $this->redirect('?c=home');
     }
+
 }

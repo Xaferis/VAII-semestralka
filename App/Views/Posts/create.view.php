@@ -28,18 +28,25 @@ $categories = $data['categories']
                             <textarea type="text" name="description" class="form-control" id="description" rows="3"><?= $post->getDescription() ?></textarea>
                             <label for="description">Popis</label>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input name="price" type="text" id="price" class="form-control" value="<?= $post->getPrice() ?>" required>
-                            <label for="price">Suma v €</label>
+                        <div class="row g-2">
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    <input name="price" type="text" id="price" class="form-control" value="<?= $post->getPrice() ?>" required>
+                                    <label for="price">Suma v €</label>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="form-floating mb-3">
+                                    <select type="text" class="form-select" id="category" name="category" required>
+                                        <?php foreach ($categories as $category) { ?>
+                                            <option value="<?= $category->getId() ?>"><?= $category->getName() ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <label for="category">Kategoria</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-floating mb-3">
-                            <select type="text" class="form-select" id="category" name="category" required>
-                                <?php foreach ($categories as $category) { ?>
-                                    <option value="<?= $category->getId() ?>"><?= $category->getName() ?></option>
-                                <?php } ?>
-                            </select>
-                            <label for="category">Kategoria</label>
-                        </div>
+
                         <div class="text-center">
                             <button class="btn btn-primary" type="submit" name="submit">Vytvorit inzerat</button>
                         </div>
