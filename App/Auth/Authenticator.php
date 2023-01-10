@@ -39,12 +39,12 @@ class Authenticator implements IAuthenticator
 
     function getLoggedUserName(): string
     {
-        return isset($_SESSION['user_name']) ? $_SESSION['user_name'] : throw new \Exception("User not logged in");
+        return $_SESSION['user_name'] ?? throw new \Exception("User not logged in");
     }
 
     function getLoggedUserId(): mixed
     {
-        return isset($_SESSION['user_id']) ? $_SESSION['user_id'] : throw new \Exception("User not logged in");
+        return $_SESSION['user_id'] ?? throw new \Exception("User not logged in");
     }
 
     function getLoggedUserContext(): mixed

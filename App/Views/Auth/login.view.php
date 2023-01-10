@@ -24,8 +24,7 @@
                         </div>
                         <div class="text-center">
                             <p>Nemas ucet? <a href="?c=auth&a=register">Registruj sa</a></p>
-                            <button class="btn btn-primary hidable" type="submit" name="submit" disabled>Prihlásiť
-                            </button>
+                            <button class="btn btn-primary hidable" type="submit" name="submit" disabled>Prihlásiť</button>
                         </div>
                     </form>
                 </div>

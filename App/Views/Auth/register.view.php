@@ -33,8 +33,7 @@
                         </div>
                         <div class="text-center">
                             <p>Uz mas ucet? <a href="?c=auth&a=login">Prihlas sa</a></p>
-                            <button class="btn btn-primary hidable" type="submit" name="submit" disabled>Zaregistruj sa
-                            </button>
+                            <button class="btn btn-primary hidable" type="submit" name="submit" disabled>Zaregistruj sa</button>
                         </div>
                     </form>
                 </div>

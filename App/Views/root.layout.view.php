@@ -30,7 +30,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="?c=category">Kategórie</a>
+                        <a class="nav-link" aria-current="page" href="?c=categoryList">Kategórie</a>
                     </li>
                 </ul>
 
