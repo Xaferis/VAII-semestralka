@@ -53,7 +53,7 @@ use App\Models\Category;
         <div class="card my-3">
             <div class="row g-0">
                 <div class="col-md-4 position-relative">
-                    <img src="https://d3fvlhjanw7tsl.cloudfront.net/84e3c465-2784-4ee1-d55b-1bea1cc53500/original" class="fit-cover w-100 h-100" alt="...">
+                    <img src="https://d3fvlhjanw7tsl.cloudfront.net/84e3c465-2784-4ee1-d55b-1bea1cc53500/original" class="fit-contain w-100 h-100" alt="...">
                 </div>
                 <div class="col-md-8 category-card">
                     <div class="card-body">
@@ -69,7 +69,7 @@ use App\Models\Category;
         <div class="card my-3">
             <div class="row g-0">
                 <div class="col-md-4 position-relative">
-                    <img src="https://d3fvlhjanw7tsl.cloudfront.net/6e907f8c-49fe-4b4b-3b54-a0c88e169900/item" class=" fit-cover w-100 h-100" alt="...">
+                    <img src="https://d3fvlhjanw7tsl.cloudfront.net/6e907f8c-49fe-4b4b-3b54-a0c88e169900/item" class=" fit-contain w-100 h-100" alt="...">
                 </div>
                 <div class="col-md-8 category-card">
                     <div class="card-body">

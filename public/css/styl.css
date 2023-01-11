@@ -136,6 +136,17 @@ footer .container .row a {
     border-color: darkseagreen !important;
 }
 
+.btn-outline-primary {
+    border-color: darkseagreen !important;
+    color: darkseagreen !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: darkseagreen;
+    border-color: darkseagreen !important;
+    color: white !important;
+}
+
 textarea[type="text"]:focus,
 select[type="text"]:focus,
 input[type="text"]:focus,
@@ -146,8 +157,8 @@ input[type="password"]:focus {
     outline: 0 none;
 }
 
-.fit-cover {
-    object-fit: cover;
+.fit-contain {
+    object-fit: contain;
 }
 
 .single-line {
@@ -169,7 +180,7 @@ input[type="password"]:focus {
 }
 
 @media (min-width: 768px) {
-    .fit-cover {
+    .fit-contain {
         position: absolute;
     }
 }
@@ -240,4 +251,22 @@ input[type="password"]:focus {
 .carousel-inner .active,
 .carousel {
     background-color: rgb(239, 240, 242);
+}
+
+.style-bold {
+    font-weight: bold;
+}
+
+.style-bolder {
+    font-weight: bolder;
+}
+
+.style-normal {
+    font-weight: normal;
+}
+
+.profile .card {
+    width: 400px;
+    border: none;
+    border-radius: 20px;
 }
