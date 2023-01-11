@@ -13,7 +13,7 @@
                     <li><?php echo $subcategory->getDescription() ?></li>
                 <?php } ?>
             </ul>
-            <p><a class="btn btn-secondary mt-1" href="category.html">Viac &raquo;</a></p>
+            <p><a class="btn btn-secondary mt-1" href="?c=category&id=<?php echo $category->getId() ?>">Viac &raquo;</a></p>
         </div>
         <?php } ?>
     </div>

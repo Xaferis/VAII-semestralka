@@ -21,7 +21,7 @@
     <script src="public/js/script.js"></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-sm fixed-top bg-light shadow-sm">
+    <nav class="navbar navbar-expand-lg fixed-top bg-light shadow-sm">
         <div class="container">
             <a class="navbar-brand textLogo" href="/?c=home">BAZARIK</a>
             <button class="navbar-toggler my-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
