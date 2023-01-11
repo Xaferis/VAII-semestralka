@@ -2,7 +2,14 @@
 
 namespace App\Controllers;
 
-class PostDetailController
+use App\Core\AControllerBase;
+use App\Core\Responses\Response;
+
+class PostDetailController extends AControllerBase
 {
 
+    public function index(): Response
+    {
+        return $this->html();
+    }
 }
