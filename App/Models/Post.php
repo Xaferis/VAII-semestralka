@@ -10,6 +10,7 @@ class Post extends Model
     protected $id;
     protected $user_id;
     protected $category_id;
+    protected $subcategory_id;
     protected $title;
     protected $description;
     protected $price;
@@ -108,6 +109,22 @@ class Post extends Model
     public function setCategoryId($category_id): void
     {
         $this->category_id = $category_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubcategoryId()
+    {
+        return $this->subcategory_id;
+    }
+
+    /**
+     * @param mixed $subcategory_id
+     */
+    public function setSubcategoryId($subcategory_id): void
+    {
+        $this->subcategory_id = $subcategory_id;
     }
 
 

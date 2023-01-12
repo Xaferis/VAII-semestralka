@@ -7,7 +7,8 @@ use App\Models\Post;
 /** @var Category[] $categories */
 
 $post = $data['post'];
-$categories = $data['categories']
+$categories = $data['categories'];
+$first_category = array_values($categories)[0];
 ?>
 <div class="container mt-2">
     <div class="row>">
@@ -25,7 +26,7 @@ $categories = $data['categories']
                         <div class="form-floating mb-3">
                             <input name="title" type="text" id="title" class="form-control" value="<?= $post->getTitle() ?>"
                                    required>
-                            <label for="title">Nazov</label>
+                            <label for="title">Názov</label>
                             <div class="invalid-feedback">Nazov nesmie byt prazdny!</div>
                         </div>
                         <div class="form-floating mb-3">
@@ -33,21 +34,37 @@ $categories = $data['categories']
                             <label for="description">Popis</label>
                         </div>
                         <div class="row g-2">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select type="text" class="form-select" id="category" name="category" onchange="updateSubcategories()" required>
+                                        <?php foreach ($categories as $category) { ?>
+                                            <option value="<?= $category->getId() ?>" <?php if($post->getCategoryId()==$category->getId()) { echo "selected"; } ?>>
+                                                <?= $category->getName() ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                    <label for="category">Kategória</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select type="text" class="form-select" id="subcategory" name="subcategory" required>
+                                        <?php foreach ($first_category->getSubcategories() as $subcategory) { ?>
+                                            <option value="<?= $subcategory->getId() ?>" <?php if($post->getSubcategoryId()==$subcategory->getId()) { echo "selected"; } ?>>
+                                                <?= $subcategory->getDescription() ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                    <label for="category">Podkategória</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input name="price" type="text" id="price" class="form-control" value="<?= $post->getPrice() ?>" required>
                                     <label for="price">Suma v €</label>
-                                    <div class="invalid-feedback">Nespravny format!</div>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="form-floating mb-3">
-                                    <select type="text" class="form-select" id="category" name="category" required>
-                                        <?php foreach ($categories as $category) { ?>
-                                            <option value="<?= $category->getId() ?>"><?= $category->getName() ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <label for="category">Kategoria</label>
+                                    <div class="invalid-feedback">Nesprávny formát!</div>
                                 </div>
                             </div>
                         </div>

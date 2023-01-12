@@ -26,8 +26,8 @@ class PostsController extends AControllerBase
         return $this->html([
             'post' => new Post(),
             'categories' => Category::getAll(),
-            'title' => 'Pridanie inzeratu',
-            'button' => 'Vytvorit inzerat'
+            'title' => 'Pridanie inzerátu',
+            'button' => 'Vytvoriť inzerát'
         ]);
     }
 
@@ -39,9 +39,10 @@ class PostsController extends AControllerBase
         $title = $this->request()->getValue('title');
         $description = $this->request()->getValue('description');
         $categoryID = $this->request()->getValue('category');
+        $subcategoryID = $this->request()->getValue('subcategory');
         $price = str_replace(",", ".", $this->request()->getValue('price'));
 
-        if (!$title || !$description || !$categoryID || !$price) {
+        if (!$title || !$description || !$categoryID || !$subcategoryID || !$price) {
             return $id
                 ? $this->redirect("?c=posts&a=edit&id=".$id)
                 : $this->redirect("?c=posts&a=create");
@@ -55,6 +56,7 @@ class PostsController extends AControllerBase
         $post->setTitle($title);
         $post->setDescription($description);
         $post->setCategoryId($categoryID);
+        $post->setSubcategoryId($subcategoryID);
         $post->setPrice($price);
 
         $post->setUserId($this->app->getAuth()->getLoggedUserId());
@@ -75,8 +77,8 @@ class PostsController extends AControllerBase
         return $this->html([
             'post' => $post,
             'categories' => $categories,
-            'title' => 'Uprava inzeratu',
-            'button' => 'Ulozit zmeny'
+            'title' => 'Úprava inzerátu',
+            'button' => 'Uložiť zmeny'
         ],
             'create');
     }
@@ -90,6 +92,13 @@ class PostsController extends AControllerBase
         }
 
         return $this->redirect("?c=posts");
+    }
+
+    public function updateSubcategories(): Response
+    {
+        $id = $this->request()->getValue('selectedValue');
+
+        return $this->json(['subcategories' => Category::getOne($id)->getSubcategories()]);
     }
 
 }

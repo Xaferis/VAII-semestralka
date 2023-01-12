@@ -3,10 +3,8 @@ function checkInputFields() {
 
     let emptyCount = Array.from(elements).filter(element => (!element.value || element.value.length === 0)).length
     if (emptyCount === 0) {
-        console.log("enabled")
         document.querySelector('.hidable').removeAttribute("disabled")
     } else {
-        console.log("Disabled")
         document.querySelector('.hidable').setAttribute("disabled", "")
     }
 }
@@ -24,6 +22,30 @@ function validateInputFields() {
             form.classList.add('was-validated')
         }, false)
     })
+}
+
+async function updateSubcategories() {
+    var subcategorySelectObject = document.getElementById("subcategory")
+    var selectedValue = document.getElementById("category").value
+    try {
+        const response = await $.ajax({
+            url: '?c=posts&a=updateSubcategories',
+            method: 'POST',
+            data: {selectedValue},
+            dataType: 'json'
+        });
+
+        if (response.hasOwnProperty('subcategories')) {
+            while (subcategorySelectObject.options.length > 0) {
+                subcategorySelectObject.remove(0);
+            }
+            response.subcategories.forEach(subcategory => {
+                subcategorySelectObject.add(new Option(subcategory.description, subcategory.id), undefined)
+            })
+        }
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 function start() {
