@@ -21,7 +21,7 @@ $first_category = array_values($categories)[0];
                     </div>
                     <div class="text-center text-danger mb-3">
                     </div>
-                    <form class="needs-validation" method="post" action="?c=posts&a=store" novalidate>
+                    <form class="needs-validation" method="post" action="?c=posts&a=store" enctype="multipart/form-data" novalidate>
                         <input type="hidden" value="<?= $post->getId() ?>" name="id">
                         <div class="form-floating mb-3">
                             <input name="title" type="text" id="title" class="form-control" value="<?= $post->getTitle() ?>"
@@ -55,7 +55,7 @@ $first_category = array_values($categories)[0];
                                             </option>
                                         <?php } ?>
                                     </select>
-                                    <label for="category">Podkategória</label>
+                                    <label for="subcategory">Podkategória</label>
                                 </div>
                             </div>
                         </div>
@@ -64,6 +64,12 @@ $first_category = array_values($categories)[0];
                                 <div class="form-floating mb-3">
                                     <input name="price" type="text" id="price" class="form-control" value="<?= $post->getPrice() ?>" required>
                                     <label for="price">Suma v €</label>
+                                    <div class="invalid-feedback">Nesprávny formát!</div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="input-group mb-3">
+                                    <input name="photo[]" type="file" id="photo" class="form-control" multiple>
                                     <div class="invalid-feedback">Nesprávny formát!</div>
                                 </div>
                             </div>

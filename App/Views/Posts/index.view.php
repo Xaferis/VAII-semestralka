@@ -11,7 +11,7 @@
 
         <div class="col">
             <div class="card h-100">
-                <img src="https://d3fvlhjanw7tsl.cloudfront.net/84e3c465-2784-4ee1-d55b-1bea1cc53500/original" class="card-img-top fit-cover position-relative w-100 h-100" alt="...">
+                <img src="public/images/uploads/IMG-63c068a97651f2.68807545.png" class="card-img-top fit-cover position-relative w-100 h-100" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $post->getTitle() ?></h5>
                     <p class="card-text"><?php echo $post->getDescription() ?></p>
