@@ -1,9 +1,9 @@
 <div class="container" id="category">
-    <div class="row mt-3">
+    <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-xs-1 justify-content-center mt-3">
         <?php
         /** @var \App\Models\Category[] $data */
         foreach ($data as $category) {
-        ?><div class="col-lg-3 col-sm-6">
+        ?><div class="col-lg-3 col-sm-6 col-xs-12 py-3">
             <div class="category-image-div">
                 <img src="<?php echo $category->getImageSrc() ?>" alt="Test">
             </div>

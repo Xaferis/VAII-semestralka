@@ -124,13 +124,6 @@ footer .container .row a {
     font-weight: bold;
 }
 
-/*.category-card .add-offer-button {*/
-/*    margin:0;*/
-/*    padding: 8px;*/
-/*    top:8px;*/
-/*    bottom:8px;*/
-/*}*/
-
 .btn-primary {
     background-color: darkseagreen !important;
     border-color: darkseagreen !important;
@@ -159,6 +152,10 @@ input[type="password"]:focus {
 
 .fit-contain {
     object-fit: contain;
+}
+
+.fit-cover {
+    object-fit: cover;
 }
 
 .single-line {
@@ -200,6 +197,10 @@ input[type="password"]:focus {
     display: none;
     padding: 0;
     margin: 0
+}
+
+.post-favorite {
+    height: 400px;
 }
 
 .carousel .carousel-inner img {
@@ -245,8 +246,6 @@ input[type="password"]:focus {
         overflow: hidden;
     }
 }
-
-
 
 .carousel-inner .active,
 .carousel {
