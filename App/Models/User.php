@@ -11,6 +11,8 @@ class User extends Model
     protected $email;
     protected $password_hash;
     protected $name;
+    protected $image_path;
+    protected $telephone;
 
     /**
      * @return mixed
@@ -18,14 +20,6 @@ class User extends Model
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id): void
-    {
-        $this->id = $id;
     }
 
     /**
@@ -74,6 +68,38 @@ class User extends Model
     public function setName($name): void
     {
         $this->name = $name;
+    }
+
+    /**
+    * @return mixed
+     */
+    public function getImagePath()
+    {
+        return $this->image_path;
+    }
+
+    /**
+    * @param mixed $image_path
+    */
+    public function setImagePath($image_path): void
+    {
+        $this->image_path = $image_path;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    /**
+     * @param mixed $telephone
+     */
+    public function setTelephone($telephone): void
+    {
+        $this->telephone = $telephone;
     }
 
 }

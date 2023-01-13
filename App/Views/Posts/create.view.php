@@ -75,7 +75,6 @@ $images = $data['images'] ?? null;
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" name="submit" id="submit-button" hidden=""></button>
                     </form>
 
                     <h6 class="border-top pt-3">Obrázky</h6>

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\AControllerBase;
+use App\Models\User;
 use App\Core\Responses\Response;
 
 /**
@@ -28,6 +29,7 @@ class ProfileController extends AControllerBase
      */
     public function index(): Response
     {
-        return $this->html();
+        $user = User::getOne($this->app->getAuth()->getLoggedUserId());
+        return $this->html($user);
     }
 }
