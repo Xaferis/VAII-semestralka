@@ -1,14 +1,17 @@
 <?php
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Post_image;
 
 /** @var Array $data */
 /** @var Post $post */
 /** @var Category[] $categories */
+/** @var Post_image[] $images */
 
 $post = $data['post'];
 $categories = $data['categories'];
 $first_category = array_values($categories)[0];
+$images = $data['images'] ?? null;
 ?>
 <div class="container mt-2 inner-container">
 
@@ -22,6 +25,11 @@ $first_category = array_values($categories)[0];
                     </div>
                     <form class="needs-validation" method="post" action="?c=posts&a=store" enctype="multipart/form-data" id="post-form" novalidate>
                         <input type="hidden" value="<?= $post->getId() ?>" name="id">
+                        <?php if (isset($images)) {
+                            foreach ($images as $image) { ?>
+                                <input type="hidden" value="<?= $image->getFileName() ?>" name="file_names[]">
+                            <?php   }
+                        } ?>
                         <div class="form-floating mb-3">
                             <input name="title" type="text" id="title" class="form-control" value="<?= $post->getTitle() ?>"
                                    required>
@@ -79,10 +87,18 @@ $first_category = array_values($categories)[0];
                     </div>
 
                     <div class="row row-cols-lg-2 row-cols-md-2 row-cols-sm-1 row-cols-1 mt-3" id="images-showcase">
+                        <?php if (isset($images)) {
+                            foreach ($images as $image) { ?>
+                            <div class="col py-3 show-image">
+                                <img class="img-fluid" src="public/images/uploads/<?php echo $image->getFileName()?>" alt="">
+                                <button class="btn btn-danger" onclick="deleteImageElements(this)" value="<?php echo $image->getFileName()?>">X</button>
+                            </div>
+                        <?php   }
+                        } ?>
                     </div>
 
                     <div class="text-center border-top pt-3">
-                        <button class="btn btn-primary" type="submit" name="submit" onclick="document.getElementById('submit-button').click()">
+                        <button class="btn btn-primary" type="submit" name="submit" form="post-form">
                             <?= $data['button'] ?>
                         </button>
                     </div>

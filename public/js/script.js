@@ -52,7 +52,7 @@ async function uploadImages() {
     let form_data = new FormData();
     let img = $("#photo")[0].files;
 
-    if (document.getElementsByName("file_paths[]").length + img.length > 10) {
+    if (document.getElementsByName("file_names[]").length + img.length > 10) {
         window.scrollTo(0,0)
         createAlert("Maximálny počet súborov je 10!")
         document.getElementById("photo").value = ""
@@ -66,7 +66,7 @@ async function uploadImages() {
 
         try {
             const response = await $.ajax({
-                url: '?c=posts&a=processImages',
+                url: '?c=posts&a=uploadImages',
                 method: 'POST',
                 data: form_data,
                 contentType: false,
@@ -79,7 +79,7 @@ async function uploadImages() {
                 for (let i = 0; i < response.file_names.length; i++) {
                     let inputElement = document.createElement("input")
                     inputElement.type = "hidden"
-                    inputElement.name = "file_paths[]"
+                    inputElement.name = "file_names[]"
                     inputElement.value = response.file_names[i]
 
                     let divElement = document.createElement("div")
@@ -92,6 +92,8 @@ async function uploadImages() {
                     let buttonElement = document.createElement("button")
                     buttonElement.className = "btn btn-danger"
                     buttonElement.innerHTML = "X"
+                    buttonElement.value = response.file_names[i]
+                    buttonElement.onclick = function(){ deleteUploadedImages(buttonElement) };
 
                     divElement.appendChild(imgElement)
                     divElement.appendChild(buttonElement)
@@ -102,6 +104,41 @@ async function uploadImages() {
         } catch (error) {
             console.error(error);
         }
+    }
+}
+
+function deleteImageElements(button) {
+    let imageName = button.value
+    let parentElement = button.parentElement
+    let inputElements = document.getElementsByName("file_names[]");
+    let inputElement = Array.from(inputElements).filter(element => (element.value === imageName))[0];
+
+    while (parentElement.firstChild) {
+        parentElement.removeChild(parentElement.lastChild);
+    }
+    parentElement.remove()
+    if (inputElement) {
+        inputElement.remove()
+        console.log(inputElement)
+    }
+}
+
+async function deleteUploadedImages(button) {
+    let imageName = button.value
+
+    try {
+        const response = await $.ajax({
+            url: '?c=posts&a=deleteImage',
+            method: 'POST',
+            data: {imageName},
+            dataType: 'json'
+        });
+
+        if (response.hasOwnProperty('isSuccessful')) {
+            deleteImageElements(button)
+        }
+    } catch (error) {
+        console.error(error);
     }
 }
 

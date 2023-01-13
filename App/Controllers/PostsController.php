@@ -42,6 +42,7 @@ class PostsController extends AControllerBase
         $categoryID = $this->request()->getValue('category');
         $subcategoryID = $this->request()->getValue('subcategory');
         $price = str_replace(",", ".", $this->request()->getValue('price'));
+        $images = $this->request()->getValue('file_names');
 
         if (!$title || !$description || !$categoryID || !$subcategoryID || !$price) {
             return $id
@@ -59,13 +60,57 @@ class PostsController extends AControllerBase
         $post->setCategoryId($categoryID);
         $post->setSubcategoryId($subcategoryID);
         $post->setPrice($price);
-
         $post->setUserId($this->app->getAuth()->getLoggedUserId());
         $post->save();
 
-//        $this->processFiles($post->getId());
+        if ($id) {
+            $currentImages = Post_image::getAll('post_id = ?', [$post->getId()]);
+
+            if (!$images || count($images) == 0) {
+                foreach ($currentImages as $currentImage) {
+                    $currentImage->delete();
+                    unlink("public/images/uploads/".$currentImage->getFileName());
+                }
+
+                return $this->redirect("?c=posts");
+            }
+
+            if (!$currentImages || count($currentImages) == 0) {
+                $this->saveImages($images, $post->getId());
+
+                return $this->redirect("?c=posts");
+            }
+
+            foreach ($currentImages as $currentImage) {
+                if (!in_array($currentImage->getFileName(), $images)) {
+                    $currentImage->delete();
+                    unlink("public/images/uploads/".$currentImage->getFileName());
+                }
+            }
+            $currentImagesNames = array_map(function ($array_item) { return $array_item->getFileName(); }, $currentImages);
+
+            foreach ($images as $image) {
+                if (!in_array($image, $currentImagesNames)) {
+                    $this->saveImages(array($image), $post->getId());
+                }
+            }
+
+        } else {
+            $this->saveImages($images, $post->getId());
+        }
 
         return $this->redirect("?c=posts");
+    }
+
+    private function saveImages($images, $id) {
+        if ($images && count($images) > 0) {
+            foreach ($images as $image) {
+                $post_image = new Post_image();
+                $post_image->setFileName($image);
+                $post_image->setPostId($id);
+                $post_image->save();
+            }
+        }
     }
 
     public function edit()
@@ -77,9 +122,12 @@ class PostsController extends AControllerBase
         $categories = Category::getAll("id <> ?", [$post->getCategoryId()]);
         array_unshift($categories, Category::getOne($post->getCategoryId()));
 
+        $images = Post_image::getAll('post_id = ?', [$post->getId()]);
+
         return $this->html([
             'post' => $post,
             'categories' => $categories,
+            'images' => $images,
             'title' => 'Úprava inzerátu',
             'button' => 'Uložiť zmeny'
         ],
@@ -104,11 +152,14 @@ class PostsController extends AControllerBase
         return $this->json(['subcategories' => Category::getOne($id)->getSubcategories()]);
     }
 
-    public function processImages(): Response
+    public function uploadImages(): Response
     {
-        $isSuccessful = true;
         $images_names = [];
         $files = $this->request()->getFiles()['photo'];
+
+        if (!$files) {
+            return $this->json(['isSuccessful' => false]);
+        }
 
         for ($i = 0; $i < count($files['name']); $i++) {
             $file_name = $files['name'][$i];
@@ -116,8 +167,7 @@ class PostsController extends AControllerBase
             $file_error = $files['error'][$i];
 
             if ($file_error != UPLOAD_ERR_OK) {
-                $isSuccessful = false;
-                break;
+                return $this->json(['isSuccessful' => false]);
             }
 
             $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
@@ -129,9 +179,20 @@ class PostsController extends AControllerBase
         }
 
         return $this->json([
-            'isSuccessful' => $isSuccessful,
+            'isSuccessful' => true,
             'file_names' => $images_names
         ]);
+    }
+
+    public function deleteImage(): Response {
+        $imageName = $this->request()->getValue('imageName');
+
+        if ($imageName) {
+            unlink("public/images/uploads/".$imageName);
+            return $this->json(['isSuccessful' => true]);
+        }
+
+        return $this->json(['isSuccessful' => false]);
     }
 
 }
