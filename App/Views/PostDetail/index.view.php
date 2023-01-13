@@ -13,13 +13,13 @@
         <!-- The slideshow/carousel -->
         <div class="carousel-inner">
             <div class="carousel-item text-center active">
-                <img src="https://d3fvlhjanw7tsl.cloudfront.net/84e3c465-2784-4ee1-d55b-1bea1cc53500/original" alt="Los Angeles">
+                <img src="https://d3fvlhjanw7tsl.cloudfront.net/84e3c465-2784-4ee1-d55b-1bea1cc53500/original">
             </div>
             <div class="carousel-item text-center">
-                <img src="https://d3fvlhjanw7tsl.cloudfront.net/6e907f8c-49fe-4b4b-3b54-a0c88e169900/item" alt="Chicago">
+                <img src="https://d3fvlhjanw7tsl.cloudfront.net/6e907f8c-49fe-4b4b-3b54-a0c88e169900/item">
             </div>
             <div class="carousel-item text-center">
-                <img src="https://www.bazos.sk/img/2t/810/146404810.jpg?t=1673447110" alt="Chicago">
+                <img src="https://www.bazos.sk/img/2t/810/146404810.jpg?t=1673447110">
             </div>
         </div>
 

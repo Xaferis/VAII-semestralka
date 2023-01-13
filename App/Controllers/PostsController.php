@@ -63,7 +63,7 @@ class PostsController extends AControllerBase
         $post->setUserId($this->app->getAuth()->getLoggedUserId());
         $post->save();
 
-        $this->processFiles($post->getId());
+//        $this->processFiles($post->getId());
 
         return $this->redirect("?c=posts");
     }
@@ -104,10 +104,11 @@ class PostsController extends AControllerBase
         return $this->json(['subcategories' => Category::getOne($id)->getSubcategories()]);
     }
 
-    private function processFiles($post_id)
+    public function processImages(): Response
     {
+        $isSuccessful = true;
+        $images_names = [];
         $files = $this->request()->getFiles()['photo'];
-        $allowed_ext = array('jpg', 'jpeg', 'png');
 
         for ($i = 0; $i < count($files['name']); $i++) {
             $file_name = $files['name'][$i];
@@ -115,26 +116,22 @@ class PostsController extends AControllerBase
             $file_error = $files['error'][$i];
 
             if ($file_error != UPLOAD_ERR_OK) {
-                continue;
+                $isSuccessful = false;
+                break;
             }
 
             $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
-
-            if (!in_array(strtolower($file_ext), $allowed_ext)) {
-                continue;
-            }
-
             $file_new_name = uniqid('IMG-', true).'.'.strtolower($file_ext);
             $file_upload_path = 'public/images/uploads/'.$file_new_name;
 
-            $image = new Post_image();
-            $image->setPostId($post_id);
-            $image->setFileName($file_new_name);
-            $image->save();
-
             move_uploaded_file($file_tmp_name, $file_upload_path);
-
+            $images_names[] = $file_new_name;
         }
+
+        return $this->json([
+            'isSuccessful' => $isSuccessful,
+            'file_names' => $images_names
+        ]);
     }
 
 }

@@ -270,3 +270,26 @@ input[type="password"]:focus {
     border: none;
     border-radius: 20px;
 }
+
+.show-image {
+    position: relative;
+}
+
+.show-image:hover img {
+    opacity: 0.5;
+}
+
+.show-image:hover button {
+    display: block;
+}
+
+.show-image button {
+    position: absolute;
+    display: none;
+}
+
+.show-image .btn {
+    top:0;
+    left:0;
+    border-radius: 20px;
+}

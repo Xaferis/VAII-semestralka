@@ -10,7 +10,8 @@ $post = $data['post'];
 $categories = $data['categories'];
 $first_category = array_values($categories)[0];
 ?>
-<div class="container mt-2">
+<div class="container mt-2 inner-container">
+
     <div class="row>">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div class="card card-signin my-5">
@@ -19,9 +20,7 @@ $first_category = array_values($categories)[0];
                     <div class="text-center text-danger mb-3">
                         <?= @$data['error_message'] ?>
                     </div>
-                    <div class="text-center text-danger mb-3">
-                    </div>
-                    <form class="needs-validation" method="post" action="?c=posts&a=store" enctype="multipart/form-data" novalidate>
+                    <form class="needs-validation" method="post" action="?c=posts&a=store" enctype="multipart/form-data" id="post-form" novalidate>
                         <input type="hidden" value="<?= $post->getId() ?>" name="id">
                         <div class="form-floating mb-3">
                             <input name="title" type="text" id="title" class="form-control" value="<?= $post->getTitle() ?>"
@@ -67,18 +66,26 @@ $first_category = array_values($categories)[0];
                                     <div class="invalid-feedback">Nesprávny formát!</div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="input-group mb-3">
-                                    <input name="photo[]" type="file" id="photo" class="form-control" multiple>
-                                    <div class="invalid-feedback">Nesprávny formát!</div>
-                                </div>
-                            </div>
                         </div>
-
-                        <div class="text-center">
-                            <button class="btn btn-primary" type="submit" name="submit"><?= $data['button'] ?></button>
-                        </div>
+                        <button type="submit" name="submit" id="submit-button" hidden=""></button>
                     </form>
+
+                    <h6 class="border-top pt-3">Obrázky</h6>
+                    <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <input name="photo[]" type="file" id="photo" class="form-control" accept=".png, .jpg, .jpeg" onchange="uploadImages()"  multiple>
+                            <div class="invalid-feedback">Nesprávny formát!</div>
+                        </div>
+                    </div>
+
+                    <div class="row row-cols-lg-2 row-cols-md-2 row-cols-sm-1 row-cols-1 mt-3" id="images-showcase">
+                    </div>
+
+                    <div class="text-center border-top pt-3">
+                        <button class="btn btn-primary" type="submit" name="submit" onclick="document.getElementById('submit-button').click()">
+                            <?= $data['button'] ?>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
