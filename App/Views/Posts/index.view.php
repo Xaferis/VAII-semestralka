@@ -8,10 +8,15 @@
     <?php }
     foreach ($data as $post) {
     ?>
-
         <div class="col">
             <div class="card h-100">
-                <img src="public/images/uploads/IMG-63c068a97651f2.68807545.png" class="card-img-top fit-cover position-relative w-100 h-100" alt="...">
+                <?php
+                $file_path = "public/images/Placeholder_Post_Image.jpg";
+                if (count($post->getImages()) > 0) {
+                    $file_path = "public/images/uploads/".$post->getImages()[0]->getFileName();
+                }
+                ?>
+                <img src="<?php echo $file_path ?>" class="card-img-top fit-cover position-relative w-100 h-100" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $post->getTitle() ?></h5>
                     <p class="card-text"><?php echo $post->getDescription() ?></p>

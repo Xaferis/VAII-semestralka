@@ -1,26 +1,38 @@
-<?php ?>
+<?php
+use App\Models\Post;
+
+/** @var Post $data */
+
+$images = $data->getImages();
+if ($images) {
+    $images_names = array_map(function ($array_item) {
+        return "public/images/uploads/" . $array_item->getFileName();
+    }, $images);
+} else {
+    $images_names = array("public/images/Placeholder_Post_Image.jpg");
+}
+?>
 <!-- Carousel -->
 <div class="row justify-content-center">
     <div id="photos" class="carousel slide col-lg-8 col-xs-12 carousel-dark" data-bs-ride="carousel">
 
         <!-- Indicators/dots -->
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#photos" data-bs-slide-to="0" class="active"></button>
-            <button type="button" data-bs-target="#photos" data-bs-slide-to="1"></button>
-            <button type="button" data-bs-target="#photos" data-bs-slide-to="2"></button>
+            <?php for($i = 0; $i < count($images_names); $i++) {?>
+                <button type="button" data-bs-target="#photos" data-bs-slide-to="<?php echo $i ?>" class="<?php if ($i == 0) { echo "active"; } ?>"></button>
+            <?php } ?>
         </div>
 
         <!-- The slideshow/carousel -->
         <div class="carousel-inner">
             <div class="carousel-item text-center active">
-                <img src="https://d3fvlhjanw7tsl.cloudfront.net/84e3c465-2784-4ee1-d55b-1bea1cc53500/original">
+                <img src="<?php echo $images_names[0] ?>">
             </div>
-            <div class="carousel-item text-center">
-                <img src="https://d3fvlhjanw7tsl.cloudfront.net/6e907f8c-49fe-4b4b-3b54-a0c88e169900/item">
-            </div>
-            <div class="carousel-item text-center">
-                <img src="https://www.bazos.sk/img/2t/810/146404810.jpg?t=1673447110">
-            </div>
+            <?php for($i = 1; $i < count($images_names); $i++) {?>
+                <div class="carousel-item text-center">
+                    <img src="<?php echo $images_names[$i] ?>">
+                </div>
+            <?php } ?>
         </div>
 
         <!-- Left and right controls/icons -->
@@ -32,18 +44,17 @@
         </button>
     </div>
 </div>
+
+
 <div class="row justify-content-center py-4">
     <div class="col-lg-8 col-xs-12">
-        <h1 class="border-bottom style-bold">Nazov</h1>
+        <h1 class="border-bottom style-bold"><?php echo $data->getTitle() ?></h1>
     </div>
     <div class="col-lg-8 col-xs-12 py-2">
-        <p>Predám zimnú bundu bola vypraná a vyskusana inak nenosena Na cene sa mozme aj dohodnut Predám zimnú bundu bola vypraná a vyskusana inak nenosena Na cene sa mozme aj dohodnut</p>
+        <p><?php echo $data->getDescription() ?></p>
     </div>
     <div class="col-lg-8 col-xs-12 py-2">
-        <h2 class="style-bold pd-2 border-bottom">200 €</h2>
-    </div>
-    <div class="col-lg-8 col-xs-12 py-2">
-        <a href="?c=postDetail&id=1" class="btn btn-primary w-100">Poslať správu</a>
+        <h2 class="style-bold pb-2 border-bottom"><?php echo $data->getPrice() ?>€</h2>
     </div>
     <div class="col-lg-8 col-xs-12 py-2">
         <a href="?c=postDetail&id=1" class="btn btn-outline-primary w-100">Pridať do obľúbených</a>

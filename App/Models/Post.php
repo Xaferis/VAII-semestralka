@@ -15,6 +15,10 @@ class Post extends Model
     protected $description;
     protected $price;
 
+    public function getImages() {
+        return Post_image::getAll('post_id = ?', [$this->getId()]);
+    }
+
     /**
      * @return mixed
      */
