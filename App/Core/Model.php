@@ -71,11 +71,15 @@ abstract class Model implements \JsonSerializable
      * @return static[]
      * @throws \Exception
      */
-    static public function getAll(string $whereClause = '', array $whereParams = [], $orderBy = ''): array
+    static public function getAll(string $whereClause = '', array $whereParams = [], $orderBy = '', $limit = ''): array
     {
         self::connect();
         try {
-            $sql = "SELECT * FROM `" . static::getTableName() . "`" . ($whereClause == '' ? '' : " WHERE $whereClause") . ($orderBy == '' ? '' : " ORDER BY $orderBy");
+            $sql = "SELECT * FROM `"
+                . static::getTableName() . "`"
+                . ($whereClause == '' ? '' : " WHERE $whereClause")
+                . ($orderBy == '' ? '' : " ORDER BY $orderBy")
+                . ($limit == '' ? '' : " LIMIT $limit");
             $stmt = self::$connection->prepare($sql);
             $stmt->execute($whereParams);
             $models = $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, static::class);

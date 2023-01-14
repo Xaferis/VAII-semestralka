@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Core\AControllerBase;
 use App\Core\Responses\Response;
+use App\Models\Category;
+use App\Models\Post;
 
 /**
  * Class HomeController
@@ -28,7 +30,12 @@ class HomeController extends AControllerBase
      */
     public function index(): Response
     {
-        return $this->html();
+        $categories = Category::getAll("", [], "",4);
+        $posts = Post::getAll("", [], "",4);
+        return $this->html([
+            'posts' => $posts,
+            'categories' => $categories
+        ]);
     }
 
     /**

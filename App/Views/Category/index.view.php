@@ -64,9 +64,9 @@ $category = $data['category']
             <div class="row g-0">
                 <div class="col-md-4 position-relative">
                     <?php
-                        $file_path = "public/images/post.jpg";
+                        $file_path = "public/images/placeholders/post.jpg";
                         if (count($post->getImages()) > 0) {
-                            $file_path = "public/images/uploads/".$post->getImages()[0]->getImagePath();
+                            $file_path = $post->getImages()[0]->getImagePath();
                         }
                     ?>
                     <img src="<?php echo $file_path ?>" class="fit-contain w-100 h-100" alt="...">
