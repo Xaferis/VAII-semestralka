@@ -131,5 +131,21 @@ class Post extends Model
         $this->subcategory_id = $subcategory_id;
     }
 
+    public function safeDelete() {
+        $favoritePosts = Favorite_post::getAll("post_id = ?", [$this->id]);
+        if ($favoritePosts) {
+            foreach ($favoritePosts as $favorite_post) {
+                $favorite_post->delete();
+            }
+        }
+        $postImages = Post_image::getAll("post_id = ?" [$this->id]);
+        if ($postImages) {
+            foreach ($postImages as $image) {
+                $image->completeDelete();
+            }
+        }
+        $this->delete();
+    }
+
 
 }

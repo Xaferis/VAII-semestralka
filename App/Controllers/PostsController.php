@@ -139,7 +139,7 @@ class PostsController extends AControllerBase
         $post = Post::getOne($this->request()->getValue('id'));
 
         if ($post) {
-            $post->delete();
+            $post->safeDelete();
         }
 
         return $this->redirect("?c=posts");

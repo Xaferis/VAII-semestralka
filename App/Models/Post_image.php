@@ -59,4 +59,9 @@ class Post_image extends Model
         $this->file_name = $file_name;
     }
 
+    public function completeDelete() {
+        unlink("public/images/uploads/".$this->file_name);
+        $this->delete();
+    }
+
 }
