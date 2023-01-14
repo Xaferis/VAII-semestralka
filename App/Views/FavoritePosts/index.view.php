@@ -1,13 +1,18 @@
+<?php
+use App\Models\Favorite_post;
 
-<h3 class="py-3">Moje inzeraty</h3>
+/** @var Favorite_post[] $data */
+?>
+
+<h3 class="py-3">Moje obľúbené inzeráty</h3>
 <div class="row row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 g-4 mb-4">
     <?php
-    /** @var \App\Models\Post[] $data */
     if (empty($data)) { ?>
-        <h6>Nemas zatial vytvorene ziadne inzeraty.</h6>
+        <h6>Nemáš zatiaľ žiadne obľúbené inzeráty.</h6>
     <?php }
-    foreach ($data as $post) {
-    ?>
+    foreach ($data as $favoritePost) {
+        $post = $favoritePost->getPostObject();
+        ?>
         <div class="col">
             <div class="card h-100">
                 <?php
@@ -23,9 +28,8 @@
                     <h5 class="card-text"><?php echo $post->getPrice() ?> €</h5>
                 </div>
                 <div class="card-footer">
-                    <a href="?c=postDetail&id=<?php echo $post->getId() ?>" class="btn btn-primary">Zobrazit</a>
-                    <a href="?c=posts&a=edit&id=<?php echo $post->getId() ?>" class="btn btn-warning">Upravit</a>
-                    <a href="?c=posts&a=delete&id=<?php echo $post->getId() ?>" class="btn btn-danger">Zmazat</a>
+                    <a href="?c=postDetail&id=<?php echo $post->getId() ?>" class="btn btn-primary">Zobrazit viac</a>
+                    <a href="?c=favoritePosts&a=delete&id=<?php echo $favoritePost->getId() ?>" class="btn btn-danger">Zmazat</a>
                 </div>
             </div>
         </div>

@@ -50,8 +50,9 @@
                                 <i class="bi bi-gear"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="?c=profile">Moj profil</a></li>
-                                <li><a class="dropdown-item" href="?c=auth&a=logout">Odhlasit sa</a></li>
+                                <li><a class="dropdown-item" href="?c=profile">Môj profil</a></li>
+                                <li><a class="dropdown-item" href="?c=favoritePosts">Obľúbené inzeráty</a></li>
+                                <li><a class="dropdown-item" href="?c=auth&a=logout">Odhlásiť sa</a></li>
                             </ul>
                         </li>
                     </ul>

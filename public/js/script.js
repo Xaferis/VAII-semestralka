@@ -265,6 +265,29 @@ async function deleteUploadedImages(button, controller) {
     }
 }
 
+async function updateFavoriteState(post_id) {
+    console.log(post_id)
+    try {
+        const response = await $.ajax({
+            url: '?c=postDetail&a=updateFavoriteState',
+            method: 'POST',
+            data: {post_id},
+            dataType: 'json'
+        });
+
+        console.log(response)
+        if (response.hasOwnProperty('isSuccessful')) {
+            if (response.isSuccessful) {
+                let buttonElement = document.getElementById("favorite_button");
+                buttonElement.innerHTML = response.didDelete ? "Pridať do obľúbených" : "Odstrániť z obľúbených"
+                buttonElement.className = response.didDelete ? "btn btn-outline-primary w-100" : "btn btn-danger w-100"
+            }
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 function createAlert(message, isDanger) {
     console.log("fungujem")
     let containerElement = document.getElementsByClassName("inner-container")[0]

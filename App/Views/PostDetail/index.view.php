@@ -1,15 +1,29 @@
 <?php
+
+use App\Core\IAuthenticator;
 use App\Models\Post;
+use App\Models\User;
 
-/** @var Post $data */
+/** @var Array $data */
+/** @var Post $post */
+/** @var User $user */
+/** @var IAuthenticator $auth */
 
-$images = $data->getImages();
+$post = $data['post'];
+$user = $data['user'];
+$images = $post->getImages();
+
 if ($images) {
     $images_names = array_map(function ($array_item) {
         return "public/images/uploads/" . $array_item->getFileName();
     }, $images);
 } else {
     $images_names = array("public/images/Placeholder_Post_Image.jpg");
+}
+
+$profile_image_path = "public/images/profile/placeholder-user.png";
+if ($user->getImagePath()) {
+    $profile_image_path = $user->getImagePath();
 }
 ?>
 <!-- Carousel -->
@@ -48,24 +62,35 @@ if ($images) {
 
 <div class="row justify-content-center py-4">
     <div class="col-lg-8 col-xs-12">
-        <h1 class="border-bottom style-bold"><?php echo $data->getTitle() ?></h1>
+        <h1 class="border-bottom style-bold"><?php echo $post->getTitle() ?></h1>
     </div>
     <div class="col-lg-8 col-xs-12 py-2">
-        <p><?php echo $data->getDescription() ?></p>
+        <p><?php echo $post->getDescription() ?></p>
     </div>
     <div class="col-lg-8 col-xs-12 py-2">
-        <h2 class="style-bold pb-2 border-bottom"><?php echo $data->getPrice() ?>€</h2>
+        <h2 class="style-bold pb-2 border-bottom"><?php echo $post->getPrice() ?>€</h2>
     </div>
-    <div class="col-lg-8 col-xs-12 py-2">
-        <a href="?c=postDetail&id=1" class="btn btn-outline-primary w-100">Pridať do obľúbených</a>
-        <p class="py-3 border-bottom"></p>
-    </div>
+    <?php if ($auth->isLogged()) { ?>
+        <div class="col-lg-8 col-xs-12 py-2">
+            <button class="btn <?php if ($data['isFavorite']) { echo 'btn-danger'; } else { echo 'btn-outline-primary'; } ?> w-100" id="favorite_button"
+                    onclick="updateFavoriteState(<?php echo $post->getId() ?>)">
+                <?php if ($data['isFavorite']) { echo 'Odstrániť z obľúbených'; } else { echo 'Pridať do obľúbených'; } ?>
+            </button>
+            <p class="py-3 border-bottom"></p>
+        </div>
+    <?php } ?>
     <div class="col-lg-8 col-xs-12">
         <h4>Pridal:</h4>
         <div class="d-flex p-3">
-            <img src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_960_720.png" alt="John Doe"
-                 class="flex-shrink-0 me-3 rounded-circle" style="width:60px;height:60px;">
-            <h5>John Doe</h5>
+            <img src="<?php echo $profile_image_path ?>" alt=""
+                 class="flex-shrink-0 me-3 rounded-circle" style="width:80px;height:80px;">
+            <div>
+                <h5><?php echo $user->getName() ?></h5>
+                <p>
+                    <strong>E-mail: </strong><?php echo $user->getEmail() ?><br><strong>Telefón: </strong><?php echo $user->getTelephone() ?>
+                </p>
+            </div>
+
         </div>
     </div>
 </div>

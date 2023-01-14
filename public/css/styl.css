@@ -134,8 +134,8 @@ footer .container .row a {
     color: darkseagreen !important;
 }
 
-.btn-outline-primary:hover {
-    background-color: darkseagreen;
+.btn-outline-primary:hover, .btn-outline-primary:active {
+    background-color: darkseagreen !important;
     border-color: darkseagreen !important;
     color: white !important;
 }
