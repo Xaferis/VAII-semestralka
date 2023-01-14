@@ -13,7 +13,7 @@ $categories = $data['categories'];
 
 <div class="inner-container">
     <div class="image-container">
-        <img src="https://offero-cdn.s3.eu-central-1.amazonaws.com/homeBanner/shopping_mirror.png" class="homepage-image" alt="">
+        <img src="public/images/placeholders/homepage.png" class="homepage-image" alt="">
         <div class="card-img-overlay">
             <h2>Spravte si doma poriadok a môžete na tom aj zarobiť.</h2>
             <a href="?c=posts&a=create" class="btn btn-primary">Pridať inzerát</a>

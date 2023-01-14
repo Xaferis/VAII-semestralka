@@ -138,7 +138,7 @@ class Post extends Model
                 $favorite_post->delete();
             }
         }
-        $postImages = Post_image::getAll("post_id = ?" [$this->id]);
+        $postImages = Post_image::getAll("post_id = ?", [$this->id]);
         if ($postImages) {
             foreach ($postImages as $image) {
                 $image->completeDelete();
