@@ -14,7 +14,6 @@ $first_category = array_values($categories)[0];
 $images = $data['images'] ?? null;
 ?>
 <div class="container mt-2 inner-container">
-
     <div class="row>">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div class="card card-signin my-5">
@@ -25,14 +24,15 @@ $images = $data['images'] ?? null;
                     </div>
                     <form class="needs-validation" method="post" action="?c=posts&a=store" enctype="multipart/form-data" id="post-form" novalidate>
                         <input type="hidden" value="<?= $post->getId() ?>" name="id">
+
                         <?php if (isset($images)) {
                             foreach ($images as $image) { ?>
-                                <input type="hidden" value="<?= $image->getFileName() ?>" name="file_names[]">
+                                <input type="hidden" value="<?= $image->getImagePath() ?>" name="images_paths[]">
                             <?php   }
                         } ?>
+
                         <div class="form-floating mb-3">
-                            <input name="title" type="text" id="title" class="form-control" value="<?= $post->getTitle() ?>"
-                                   required>
+                            <input name="title" type="text" id="title" class="form-control" value="<?= $post->getTitle() ?>" required>
                             <label for="title">Názov</label>
                             <div class="invalid-feedback">Nazov nesmie byt prazdny!</div>
                         </div>
@@ -44,11 +44,13 @@ $images = $data['images'] ?? null;
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
                                     <select type="text" class="form-select" id="category" name="category" onchange="updateSubcategories()" required>
+
                                         <?php foreach ($categories as $category) { ?>
                                             <option value="<?= $category->getId() ?>" <?php if($post->getCategoryId()==$category->getId()) { echo "selected"; } ?>>
                                                 <?= $category->getName() ?>
                                             </option>
                                         <?php } ?>
+
                                     </select>
                                     <label for="category">Kategória</label>
                                 </div>
@@ -56,11 +58,13 @@ $images = $data['images'] ?? null;
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
                                     <select type="text" class="form-select" id="subcategory" name="subcategory" required>
+
                                         <?php foreach ($first_category->getSubcategories() as $subcategory) { ?>
                                             <option value="<?= $subcategory->getId() ?>" <?php if($post->getSubcategoryId()==$subcategory->getId()) { echo "selected"; } ?>>
                                                 <?= $subcategory->getDescription() ?>
                                             </option>
                                         <?php } ?>
+
                                     </select>
                                     <label for="subcategory">Podkategória</label>
                                 </div>
@@ -86,14 +90,16 @@ $images = $data['images'] ?? null;
                     </div>
 
                     <div class="row row-cols-lg-2 row-cols-md-2 row-cols-sm-1 row-cols-1 mt-3" id="images-showcase">
+
                         <?php if (isset($images)) {
                             foreach ($images as $image) { ?>
                             <div class="col py-3 show-image">
-                                <img class="img-fluid" src="public/images/uploads/<?php echo $image->getFileName()?>" alt="">
-                                <button class="btn btn-danger" onclick="deletePostImageElements(this)" value="<?php echo $image->getFileName()?>">X</button>
+                                <img class="img-fluid" src="<?= $image->getImagePath() ?>" alt="">
+                                <button class="btn btn-danger" onclick="deletePostImageElements(this)" value="<?= $image->getImagePath() ?>">X</button>
                             </div>
                         <?php   }
                         } ?>
+
                     </div>
 
                     <div class="text-center border-top pt-3">

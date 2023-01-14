@@ -42,7 +42,7 @@ class PostsController extends AControllerBase
         $categoryID = $this->request()->getValue('category');
         $subcategoryID = $this->request()->getValue('subcategory');
         $price = str_replace(",", ".", $this->request()->getValue('price'));
-        $images = $this->request()->getValue('file_names');
+        $images = $this->request()->getValue('images_paths');
 
         if (!$title || !$description || !$categoryID || !$subcategoryID || !$price) {
             return $id
@@ -68,10 +68,8 @@ class PostsController extends AControllerBase
 
             if (!$images || count($images) == 0) {
                 foreach ($currentImages as $currentImage) {
-                    $currentImage->delete();
-                    unlink("public/images/uploads/".$currentImage->getFileName());
+                    $currentImage->completeDelete();
                 }
-
                 return $this->redirect("?c=posts");
             }
 
@@ -82,19 +80,17 @@ class PostsController extends AControllerBase
             }
 
             foreach ($currentImages as $currentImage) {
-                if (!in_array($currentImage->getFileName(), $images)) {
-                    $currentImage->delete();
-                    unlink("public/images/uploads/".$currentImage->getFileName());
+                if (!in_array($currentImage->getImagePath(), $images)) {
+                    $currentImage->completeDelete();
                 }
             }
-            $currentImagesNames = array_map(function ($array_item) { return $array_item->getFileName(); }, $currentImages);
 
+            $currentImagesNames = array_map(function ($array_item) { return $array_item->getImagePath(); }, $currentImages);
             foreach ($images as $image) {
                 if (!in_array($image, $currentImagesNames)) {
                     $this->saveImages(array($image), $post->getId());
                 }
             }
-
         } else {
             $this->saveImages($images, $post->getId());
         }
@@ -106,7 +102,7 @@ class PostsController extends AControllerBase
         if ($images && count($images) > 0) {
             foreach ($images as $image) {
                 $post_image = new Post_image();
-                $post_image->setFileName($image);
+                $post_image->setImagePath($image);
                 $post_image->setPostId($id);
                 $post_image->save();
             }
@@ -130,17 +126,13 @@ class PostsController extends AControllerBase
             'images' => $images,
             'title' => 'Úprava inzerátu',
             'button' => 'Uložiť zmeny'
-        ],
-            'create');
+        ], 'create');
     }
 
     public function delete()
     {
         $post = Post::getOne($this->request()->getValue('id'));
-
-        if ($post) {
-            $post->safeDelete();
-        }
+        $post?->safeDelete();
 
         return $this->redirect("?c=posts");
     }
@@ -154,7 +146,7 @@ class PostsController extends AControllerBase
 
     public function uploadImages(): Response
     {
-        $images_names = [];
+        $images_paths = [];
         $files = $this->request()->getFiles()['photo'];
 
         if (!$files) {
@@ -175,20 +167,20 @@ class PostsController extends AControllerBase
             $file_upload_path = 'public/images/uploads/'.$file_new_name;
 
             move_uploaded_file($file_tmp_name, $file_upload_path);
-            $images_names[] = $file_new_name;
+            $images_paths[] = $file_upload_path;
         }
 
         return $this->json([
             'isSuccessful' => true,
-            'file_names' => $images_names
+            'file_names' => $images_paths
         ]);
     }
 
     public function deleteImage(): Response {
-        $imageName = $this->request()->getValue('imageName');
+        $imageName = $this->request()->getValue('imagePath');
 
         if ($imageName) {
-            unlink("public/images/uploads/".$imageName);
+            unlink($imageName);
             return $this->json(['isSuccessful' => true]);
         }
 

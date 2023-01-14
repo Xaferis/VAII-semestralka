@@ -15,12 +15,14 @@ use App\Models\Favorite_post;
         ?>
         <div class="col">
             <div class="card h-100">
+
                 <?php
-                $file_path = "public/images/Placeholder_Post_Image.jpg";
+                $file_path = "public/images/placeholders/post.jpg";
                 if (count($post->getImages()) > 0) {
-                    $file_path = "public/images/uploads/".$post->getImages()[0]->getFileName();
+                    $file_path = $post->getImages()[0]->getImagePath();
                 }
                 ?>
+
                 <img src="<?php echo $file_path ?>" class="card-img-top fit-cover position-relative w-100 h-100" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $post->getTitle() ?></h5>

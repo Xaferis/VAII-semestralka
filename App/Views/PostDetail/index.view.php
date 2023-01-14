@@ -14,14 +14,12 @@ $user = $data['user'];
 $images = $post->getImages();
 
 if ($images) {
-    $images_names = array_map(function ($array_item) {
-        return "public/images/uploads/" . $array_item->getFileName();
-    }, $images);
+    $images_names = array_map(function ($array_item) { return $array_item->getImagePath(); }, $images);
 } else {
-    $images_names = array("public/images/Placeholder_Post_Image.jpg");
+    $images_names = array("public/images/placeholders/post.jpg");
 }
 
-$profile_image_path = "public/images/profile/placeholder-user.png";
+$profile_image_path = "public/images/placeholders/user.png";
 if ($user->getImagePath()) {
     $profile_image_path = $user->getImagePath();
 }

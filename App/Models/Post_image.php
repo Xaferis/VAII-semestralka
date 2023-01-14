@@ -9,7 +9,7 @@ class Post_image extends Model
 
     protected $id;
     protected $post_id;
-    protected $file_name;
+    protected $image_path;
 
     /**
      * @return mixed
@@ -46,21 +46,21 @@ class Post_image extends Model
     /**
      * @return mixed
      */
-    public function getFileName()
+    public function getImagePath()
     {
-        return $this->file_name;
+        return $this->image_path;
     }
 
     /**
-     * @param mixed $file_name
+     * @param mixed $image_path
      */
-    public function setFileName($file_name): void
+    public function setImagePath($image_path): void
     {
-        $this->file_name = $file_name;
+        $this->image_path = $image_path;
     }
 
     public function completeDelete() {
-        unlink("public/images/uploads/".$this->file_name);
+        unlink($this->image_path);
         $this->delete();
     }
 

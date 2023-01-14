@@ -52,7 +52,7 @@ async function uploadImages() {
     let form_data = new FormData();
     let img = $("#photo")[0].files;
 
-    if (document.getElementsByName("file_names[]").length + img.length > 10) {
+    if (document.getElementsByName("images_paths[]").length + img.length > 10) {
         window.scrollTo(0,0)
         createAlert("Maximálny počet súborov je 10!", "danger")
         document.getElementById("photo").value = ""
@@ -84,7 +84,7 @@ async function uploadImages() {
                 for (let i = 0; i < response.file_names.length; i++) {
                     let inputElement = document.createElement("input")
                     inputElement.type = "hidden"
-                    inputElement.name = "file_names[]"
+                    inputElement.name = "images_paths[]"
                     inputElement.value = response.file_names[i]
 
                     let divElement = document.createElement("div")
@@ -92,7 +92,7 @@ async function uploadImages() {
 
                     let imgElement = document.createElement("img")
                     imgElement.className = "img-fluid"
-                    imgElement.src = "public/images/uploads/" + response.file_names[i]
+                    imgElement.src = response.file_names[i]
 
                     let buttonElement = document.createElement("button")
                     buttonElement.className = "btn btn-danger"
@@ -216,7 +216,7 @@ async function updateProfileData() {
 function deletePostImageElements(button) {
     let imageName = button.value
     let parentElement = button.parentElement
-    let inputElements = document.getElementsByName("file_names[]");
+    let inputElements = document.getElementsByName("images_paths[]");
     let inputElement = Array.from(inputElements).filter(element => (element.value === imageName))[0];
 
     while (parentElement.firstChild) {
@@ -236,20 +236,20 @@ function deleteProfileImageElements() {
 
     button.remove()
     inputElement.remove()
-    profileImageElement.src = "public/images/profile/placeholder-user.png"
+    profileImageElement.src = "public/images/profile/user.png"
     if (buttonDiv) {
         buttonDiv.className = "col-3 p-3"
     }
 }
 
 async function deleteUploadedImages(button, controller) {
-    let imageName = button.value
+    let imagePath = button.value
 
     try {
         const response = await $.ajax({
             url: '?c=' + controller + '&a=deleteImage',
             method: 'POST',
-            data: {imageName},
+            data: {imagePath},
             dataType: 'json'
         });
 

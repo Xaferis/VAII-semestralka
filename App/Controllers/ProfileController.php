@@ -100,7 +100,7 @@ class ProfileController extends AControllerBase
     }
 
     public function deleteImage(): Response {
-        $imageName = $this->request()->getValue('imageName');
+        $imageName = $this->request()->getValue('imagePath');
 
         if ($imageName) {
             unlink($imageName);

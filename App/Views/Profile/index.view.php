@@ -5,7 +5,7 @@ use App\Models\User;
 /** @var User $user */
 
 $user = $data['user'];
-$image_path = "public/images/profile/placeholder-user.png";
+$image_path = "public/images/profile/user.png";
 if ($user->getImagePath()) {
     $image_path = $user->getImagePath();
 }
