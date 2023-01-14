@@ -288,8 +288,27 @@ async function updateFavoriteState(post_id) {
     }
 }
 
+async function deleteAccount() {
+    if (confirm('Naozaj si praješ vymazať účet? Po potrvdení sa už nebude dať obnoviť.')) {
+        let isFromProfile = true;
+        try {
+            const response = await $.ajax({
+                url: '?c=profile&a=delete',
+                method: 'POST',
+                data: {isFromProfile},
+                dataType: 'json'
+            });
+
+            if (response.hasOwnProperty('isSuccessful')) {
+                location.href = '?c=home'
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}
+
 function createAlert(message, isDanger) {
-    console.log("fungujem")
     let containerElement = document.getElementsByClassName("inner-container")[0]
 
     let type = isDanger ? "danger" : "success"

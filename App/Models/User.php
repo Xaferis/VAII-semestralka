@@ -102,4 +102,17 @@ class User extends Model
         $this->telephone = $telephone;
     }
 
+    public function safeDelete() {
+        $posts = Post::getAll("user_id = ?", [$this->id]);
+        foreach ($posts as $post) {
+            $post->safeDelete();
+        }
+        $favoritePosts = Favorite_post::getAll("user_id = ?", [$this->id]);
+        foreach ($favoritePosts as $post) {
+            $post->delete();
+        }
+
+        $this->delete();
+    }
+
 }

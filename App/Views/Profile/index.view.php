@@ -5,7 +5,7 @@ use App\Models\User;
 /** @var User $user */
 
 $user = $data['user'];
-$image_path = "public/images/profile/user.png";
+$image_path = "public/images/placeholders/user.png";
 if ($user->getImagePath()) {
     $image_path = $user->getImagePath();
 }
@@ -83,7 +83,7 @@ if ($user->getImagePath()) {
 
                     <h5 class="pt-3 pb-2 border-bottom">Zmazanie účtu</h5>
                     <div class="text-center mt-3">
-                        <button class="btn btn-danger" name="delete-acc">Zmazať účet</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteAccount()">Zmazať účet</button>
                     </div>
 
                 </div>

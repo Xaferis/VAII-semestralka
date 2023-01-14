@@ -149,4 +149,18 @@ class ProfileController extends AControllerBase
             'user' => $user
         ], 'index');
     }
+
+    function delete(): Response {
+        $isFromProfile = $this->request()->getValue('isFromProfile');
+
+        if (!$isFromProfile) {
+            $this->redirect('?c=home');
+        }
+
+        $user = User::getOne($this->app->getAuth()->getLoggedUserId());
+        $this->app->getAuth()->logout();
+        $user->safeDelete();
+
+        return $this->json(['isSuccessful' => true]);
+    }
 }
