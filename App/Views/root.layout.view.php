@@ -38,7 +38,6 @@
 
 
                 <?php if ($auth->isLogged()) { ?>
-                    <span class="navbar-text">Prihlaseny ako: <b><?= $auth->getLoggedUserName() ?></b></span>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="?c=posts&a=create">Pridať inzerát</a>

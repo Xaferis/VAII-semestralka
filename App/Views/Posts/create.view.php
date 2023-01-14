@@ -90,7 +90,7 @@ $images = $data['images'] ?? null;
                             foreach ($images as $image) { ?>
                             <div class="col py-3 show-image">
                                 <img class="img-fluid" src="public/images/uploads/<?php echo $image->getFileName()?>" alt="">
-                                <button class="btn btn-danger" onclick="deleteImageElements(this)" value="<?php echo $image->getFileName()?>">X</button>
+                                <button class="btn btn-danger" onclick="deletePostImageElements(this)" value="<?php echo $image->getFileName()?>">X</button>
                             </div>
                         <?php   }
                         } ?>
