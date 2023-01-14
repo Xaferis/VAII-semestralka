@@ -86,8 +86,8 @@
                     <a class="footerTitle">Všeobecné informácie</a>
 
                     <ul class="list-unstyled">
-                        <li><a href="#!">FAQ</a></li>
-                        <li><a href="#!">Reklamačný poriadok</a></li>
+                        <li><a href="?c=home&a=faq">FAQ</a></li>
+                        <li><a href="?c=home&a=refundPolicy">Reklamačný poriadok</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-1">

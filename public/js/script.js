@@ -213,35 +213,6 @@ async function updateProfileData() {
     }
 }
 
-function deletePostImageElements(button) {
-    let imageName = button.value
-    let parentElement = button.parentElement
-    let inputElements = document.getElementsByName("images_paths[]");
-    let inputElement = Array.from(inputElements).filter(element => (element.value === imageName))[0];
-
-    while (parentElement.firstChild) {
-        parentElement.removeChild(parentElement.lastChild);
-    }
-    parentElement.remove()
-    if (inputElement) {
-        inputElement.remove()
-    }
-}
-
-function deleteProfileImageElements() {
-    let button = document.getElementById("delete_button")
-    let buttonDiv = button.parentElement
-    let inputElement = document.getElementById("file_path_input")
-    let profileImageElement = document.getElementById("profile-image")
-
-    button.remove()
-    inputElement.remove()
-    profileImageElement.src = "public/images/profile/user.png"
-    if (buttonDiv) {
-        buttonDiv.className = "col-3 p-3"
-    }
-}
-
 async function deleteUploadedImages(button, controller) {
     let imagePath = button.value
 
@@ -305,6 +276,35 @@ async function deleteAccount() {
         } catch (error) {
             console.error(error);
         }
+    }
+}
+
+function deletePostImageElements(button) {
+    let imageName = button.value
+    let parentElement = button.parentElement
+    let inputElements = document.getElementsByName("images_paths[]");
+    let inputElement = Array.from(inputElements).filter(element => (element.value === imageName))[0];
+
+    while (parentElement.firstChild) {
+        parentElement.removeChild(parentElement.lastChild);
+    }
+    parentElement.remove()
+    if (inputElement) {
+        inputElement.remove()
+    }
+}
+
+function deleteProfileImageElements() {
+    let button = document.getElementById("delete_button")
+    let buttonDiv = button.parentElement
+    let inputElement = document.getElementById("file_path_input")
+    let profileImageElement = document.getElementById("profile-image")
+
+    button.remove()
+    inputElement.remove()
+    profileImageElement.src = "public/images/profile/user.png"
+    if (buttonDiv) {
+        buttonDiv.className = "col-3 p-3"
     }
 }
 
