@@ -47,7 +47,7 @@ class ProfileController extends AControllerBase
             ]);
         }
 
-        $telephone = $this->request()->getValue('telephone');
+        $telephone = str_replace(" ", "", $this->request()->getValue('telephone'));
         if (strlen($telephone) > 0 && !Validator::validateTelephone($telephone)) {
             return $this->json([
                 'user' => $user,

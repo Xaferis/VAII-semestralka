@@ -2,12 +2,12 @@
     <div class="card text-white border-0">
         <img src="https://offero-cdn.s3.eu-central-1.amazonaws.com/homeBanner/shopping_mirror.png" class="card-img" alt="Image">
         <div class="card-img-overlay">
-            <h2>Spravte si doma poriadok a mozete na tom aj zarobit.</h2>
-            <button type="button" class="add-offer-button">Pridat inzerat</button>
+            <h2>Spravte si doma poriadok a môžete na tom aj zarobiť.</h2>
+            <a href="?c=posts&a=create" class="btn btn-primary">Pridať inzerát</a>
         </div>
     </div>
 
-    <h3 class="py-3">Najnovsie inzeraty</h3>
+    <h3 class="py-3">Najnovšie inzeráty</h3>
 
     <div class="row row-cols-1 row-cols-md-4 g-4 mb-4">
         <div class="col">
