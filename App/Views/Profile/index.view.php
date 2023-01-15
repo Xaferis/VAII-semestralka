@@ -12,11 +12,13 @@ if ($user->getImagePath()) {
 ?>
 
 <div class="container mt-2 inner-container">
+
     <?php if (isset($data['message'])) {?>
         <script>
             createAlert("<?php echo $data['message'] ?>", <?php echo $data['isMessageError'] ?>)
         </script>
     <?php } ?>
+
     <div class="row>">
         <div class="col-sm-9 col-md-8 col-lg-5 mx-auto">
             <div class="card card-signin my-5">

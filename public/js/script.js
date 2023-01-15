@@ -1,14 +1,74 @@
-function checkInputFields() {
-    const elements = document.getElementsByClassName("form-control")
+function checkRegisterInputFields() {
+    let emailInput = document.getElementById("email")
+    let usernameInput = document.getElementById("username")
+    let passwordInput = document.getElementById("password")
+    let passwordCheckInput = document.getElementById("password_check")
+    let button = document.getElementById("submit_button")
+    let areValid = true
 
-    let emptyCount = Array.from(elements).filter(element => (!element.value || element.value.length === 0)).length
-    if (emptyCount === 0) {
-        document.querySelector('.hidable').removeAttribute("disabled")
-    } else {
-        document.querySelector('.hidable').setAttribute("disabled", "")
-    }
+    Array(emailInput, usernameInput, passwordInput, passwordCheckInput).forEach(element => {
+        if (element.classList.contains("invalid")) {
+            areValid = false
+        }
+    })
+
+    button.disabled = !areValid;
 }
 
+function checkLoginInputFields() {
+    let emailInput = document.getElementById("email")
+    let passwordInput = document.getElementById("password")
+    let button = document.getElementById("submit_button")
+
+    button.disabled = emailInput.value === "" || passwordInput.value === ""
+}
+
+function checkInputField(name) {
+    let regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+    let regexUsername = /^[a-zA-Z][0-9a-zA-Z_]{2,23}[0-9a-zA-Z]$/
+    let regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{8,}$/
+    let regex
+
+    if (name === "email") {
+        regex = regexEmail
+    } else if (name === "username") {
+        regex = regexUsername
+    } else {
+        regex = regexPassword
+    }
+
+    let inputElement = document.getElementById(name)
+    let warningMessage = document.getElementById("warning_" + name)
+
+    if(inputElement.value.match(regex)) {
+        warningMessage.hidden = true
+        inputElement.classList.remove("invalid")
+    } else {
+        warningMessage.hidden = false
+        inputElement.classList.add("invalid")
+    }
+
+    if (name === "password" && document.getElementById("password_check").value !== "") {
+        checkPasswords()
+    }
+
+    checkRegisterInputFields()
+}
+
+function checkPasswords() {
+    let passwordInput = document.getElementById("password")
+    let passwordCheckInput = document.getElementById("password_check")
+    let warningMessage = document.getElementById("warning_password_check")
+
+    if (passwordInput.value === passwordCheckInput.value) {
+        warningMessage.hidden = true
+        passwordCheckInput.classList.remove("invalid")
+    } else {
+        warningMessage.hidden = false
+        passwordCheckInput.classList.add("invalid")
+    }
+    checkRegisterInputFields()
+}
 
 async function updateSubcategories() {
     let subcategorySelectObject = document.getElementById("subcategory")
@@ -232,7 +292,6 @@ async function updateFavoriteState(post_id) {
             dataType: 'json'
         });
 
-        console.log(response)
         if (response.hasOwnProperty('isSuccessful')) {
             if (response.isSuccessful) {
                 let buttonElement = document.getElementById("favorite_button");
