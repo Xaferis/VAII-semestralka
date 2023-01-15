@@ -13,6 +13,12 @@ class PostDetailController extends AControllerBase
 
     public function index(): Response
     {
+        $postId = $this->request()->getValue('id');
+        $posts = array_map(function ($array_item) { return $array_item->getId(); }, Post::getAll());
+        if (!$postId || !is_numeric($postId) || !in_array($postId, $posts)) {
+            return $this->redirect("?c=home");
+        }
+
         $post = Post::getOne($this->request()->getValue('id'));
         $favoritePost = false;
         if (isset(Favorite_post::getAll("post_id = ?", [$post->getId()])[0])) {

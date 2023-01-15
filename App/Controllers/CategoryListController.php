@@ -17,7 +17,13 @@ class CategoryListController extends AControllerBase
     }
 
     public function show(): Response {
-        $category = Category::getOne($this->request()->getValue('category'));
+        $categoryId = $this->request()->getValue('category');
+
+        if (!$categoryId || !is_numeric($categoryId) || $categoryId < 1 || $categoryId > count(Category::getAll())) {
+            return $this->redirect("?c=categoryList");
+        }
+
+        $category = Category::getOne($categoryId);
         $subcategory = $this->request()->getValue('subcategory');
         $orderBy = $this->request()->getValue('orderBy');
         $data['category'] = $category;
@@ -28,14 +34,23 @@ class CategoryListController extends AControllerBase
         $orderByClause = '';
 
         if ($subcategory) {
-            $whereClause .= " AND subcategory_id = ?";
-            $whereParams[] = $subcategory;
-            $data['subcategoryParam'] = "&subcategory=" . $subcategory;
+            $subcategories = array_map(function ($array_item) { return $array_item->getId(); }, $category->getSubcategories());
+            if (is_numeric($subcategory) && $subcategory >= 1 && in_array($subcategory, $subcategories)) {
+                $whereClause .= " AND subcategory_id = ?";
+                $whereParams[] = $subcategory;
+                $data['subcategoryParam'] = "&subcategory=" . $subcategory;
+            } else {
+                return $this->redirect("?c=categoryList");
+            }
         }
 
         if($orderBy) {
-            $orderByClause .= 'price '.$orderBy;
-            $data['orderByParam'] = "&orderBy=" . $orderBy;
+            if (strcmp($orderBy, "ASC") == 0 || strcmp($orderBy, "DESC") == 0) {
+                $orderByClause .= 'price '.$orderBy;
+                $data['orderByParam'] = "&orderBy=" . $orderBy;
+            } else {
+                return $this->redirect("?c=categoryList");
+            }
         }
 
         $posts= Post::getAll($whereClause, $whereParams, $orderByClause);
@@ -43,5 +58,4 @@ class CategoryListController extends AControllerBase
 
         return $this->html($data);
     }
-
 }
