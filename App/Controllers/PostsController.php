@@ -30,6 +30,10 @@ class PostsController extends AControllerBase
         return $this->html($posts);
     }
 
+    /**
+     * This function shows a view with a form for creating new posts
+     * @return \App\Core\Responses\Response|\App\Core\Responses\ViewResponse
+     */
     public function create(): Response
     {
         return $this->html([
@@ -40,6 +44,12 @@ class PostsController extends AControllerBase
         ]);
     }
 
+    /**
+     * This function shows a view with a filled form of a post, we want to edit
+     * Request params, which are used here:
+     *  - id -> post id which we want to edit
+     * @return \App\Core\Responses\Response|\App\Core\Responses\ViewResponse
+     */
     public function edit()
     {
         $post = Post::getOne($this->request()->getValue('id'));
@@ -60,6 +70,12 @@ class PostsController extends AControllerBase
         ], 'create');
     }
 
+    /**
+     * This function deletes post from a database, it redirects a user to posts view afterwards
+     * Request params, which are used here:
+     *  - id -> post id which delete
+     * @return \App\Core\Responses\Response|\App\Core\Responses\ViewResponse
+     */
     public function delete()
     {
         $post = Post::getOne($this->request()->getValue('id'));
@@ -68,6 +84,17 @@ class PostsController extends AControllerBase
         return $this->redirect("?c=posts");
     }
 
+    /**
+     * This function stores posts to database, it redirects a user to posts view afterwards
+     * Request params, which are used here:
+     *  - id -> post id which we want to edit, if is null, it will add it instead
+     *  - title -> post title
+     *  - description -> post description
+     *  - category -> post category
+     *  - subcategory -> post subcategory
+     *  - images_paths -> array of images
+     * @return \App\Core\Responses\Response|\App\Core\Responses\ViewResponse
+     */
     public function store()
     {
         $id = $this->request()->getValue('id');
@@ -155,6 +182,10 @@ class PostsController extends AControllerBase
         }
     }
 
+    /**
+     * This function will upload images to the server, uses "photo" request param
+     * @return \App\Core\Responses\Response|\App\Core\Responses\JsonResponse
+     */
     public function uploadImages(): Response
     {
         $images_paths = [];
@@ -187,6 +218,10 @@ class PostsController extends AControllerBase
         ]);
     }
 
+    /**
+     * This function will delete Image from server
+     * @return \App\Core\Responses\Response|\App\Core\Responses\JsonResponse
+     */
     public function deleteImage(): Response {
         $imageName = $this->request()->getValue('imagePath');
 
@@ -198,6 +233,10 @@ class PostsController extends AControllerBase
         return $this->json(['isSuccessful' => false]);
     }
 
+    /**
+     * This function will update subcategories according to selected category
+     * @return \App\Core\Responses\Response|\App\Core\Responses\JsonResponse
+     */
     public function updateSubcategories(): Response
     {
         $id = $this->request()->getValue('selectedValue');

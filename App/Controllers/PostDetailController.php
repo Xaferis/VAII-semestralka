@@ -11,6 +11,12 @@ use App\Models\User;
 class PostDetailController extends AControllerBase
 {
 
+    /**
+     * Shows a page with post detail
+     * URL params, which are used here:
+     *  - id -> id of a post
+     * @return \App\Core\Responses\Response|\App\Core\Responses\ViewResponse
+     */
     public function index(): Response
     {
         $postId = $this->request()->getValue('id');
@@ -32,6 +38,12 @@ class PostDetailController extends AControllerBase
         ]);
     }
 
+    /**
+     * This function adds or removes post from user's favorites
+     * Request params, which are used here:
+     *  - post_id -> post id which we want to add or remove
+     * @return \App\Core\Responses\Response|\App\Core\Responses\ViewResponse
+     */
     public function updateFavoriteState(): Response {
         $post_id = $this->request()->getValue('post_id');
         $favoritePosts = Favorite_post::getAll("post_id = ?", [$post_id]);

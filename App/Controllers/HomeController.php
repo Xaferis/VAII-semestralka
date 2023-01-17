@@ -25,7 +25,7 @@ class HomeController extends AControllerBase
     }
 
     /**
-     * Example of an action (authorization needed)
+     * Shows homepage
      * @return \App\Core\Responses\Response|\App\Core\Responses\ViewResponse
      */
     public function index(): Response
@@ -39,18 +39,26 @@ class HomeController extends AControllerBase
     }
 
     /**
-     * Example of an action accessible without authorization
-     * @return \App\Core\Responses\ViewResponse
+     * Shows contact page
+     * @return \App\Core\Responses\Response|\App\Core\Responses\ViewResponse
      */
     public function contact(): Response
     {
         return $this->html();
     }
 
+    /**
+     * Shows FAQ page
+     * @return \App\Core\Responses\Response|\App\Core\Responses\ViewResponse
+     */
     public function faq(): Response {
         return $this->html();
     }
 
+    /**
+     * Shows refund policy page
+     * @return \App\Core\Responses\Response|\App\Core\Responses\ViewResponse
+     */
     public function refundPolicy(): Response {
         return $this->html();
     }

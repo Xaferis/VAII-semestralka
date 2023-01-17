@@ -25,7 +25,7 @@ class ProfileController extends AControllerBase
     }
 
     /**
-     * Example of an action (authorization needed)
+     * Shows a profile page
      * @return \App\Core\Responses\Response|\App\Core\Responses\ViewResponse
      */
     public function index(): Response
@@ -34,6 +34,10 @@ class ProfileController extends AControllerBase
         return $this->html(['user' => $user]);
     }
 
+    /**
+     * Function, that updates user profile
+     * @return \App\Core\Responses\Response|\App\Core\Responses\JsonResponse
+     */
     public function update(): Response {
         $user = User::getOne($this->app->getAuth()->getLoggedUserId());
 
@@ -71,6 +75,10 @@ class ProfileController extends AControllerBase
         ]);
     }
 
+    /**
+     * Function, that uploads user's new profile photo on server
+     * @return \App\Core\Responses\Response|\App\Core\Responses\JsonResponse
+     */
     public function uploadImage(): Response
     {
         $file = $this->request()->getFiles()['photo'];

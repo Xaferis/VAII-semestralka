@@ -37,14 +37,14 @@ $disabledClass = $post->getId() ? "enabled" : "disabled";
                             <div class="warning-message px-1 pt-1" id="warning_title" hidden>Názov nesmie byť prázdny!</div>
                         </div>
                         <div class="form-floating mb-3">
-                            <textarea type="text" name="description" class="form-control <?= $validClass ?>" id="description" rows="3" onkeyup="checkPostsInputFields('description')"><?= $post->getDescription() ?></textarea>
+                            <textarea name="description" class="form-control <?= $validClass ?>" id="description" rows="3" onkeyup="checkPostsInputFields('description')"><?= $post->getDescription() ?></textarea>
                             <label for="description">Popis</label>
                             <div class="warning-message px-1 pt-1" id="warning_description" hidden>Popis nesmie byť prázdny!</div>
                         </div>
                         <div class="row g-2">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select type="text" class="form-select" id="category" name="category" onchange="updateSubcategories()" required>
+                                    <select class="form-select" id="category" name="category" onchange="updateSubcategories()" required>
 
                                         <?php foreach ($categories as $category) { ?>
                                             <option value="<?= $category->getId() ?>" <?php if($post->getCategoryId()==$category->getId()) { echo "selected"; } ?>>
@@ -58,7 +58,7 @@ $disabledClass = $post->getId() ? "enabled" : "disabled";
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select type="text" class="form-select" id="subcategory" name="subcategory" required>
+                                    <select class="form-select" id="subcategory" name="subcategory" required>
 
                                         <?php foreach ($first_category->getSubcategories() as $subcategory) { ?>
                                             <option value="<?= $subcategory->getId() ?>" <?php if($post->getSubcategoryId()==$subcategory->getId()) { echo "selected"; } ?>>

@@ -10,12 +10,24 @@ use App\Models\Post;
 class CategoryListController extends AControllerBase
 {
 
+    /**
+     * Shows a page with category list
+     * @return \App\Core\Responses\RedirectResponse|\App\Core\Responses\Response
+     */
     public function index(): Response
     {
         $categories = Category::getAll();
         return $this->html($categories);
     }
 
+    /**
+     * This function will show posts from url parameters.
+     * Request params, which are used here:
+     *  - category (number) -> id of category (required)
+     *  - subcategory (number) -> id of subcategory (optional)
+     *  - orderBy (ASC/DESC) -> in which order should be result sorted (according to post price)
+     * @return \App\Core\Responses\RedirectResponse|\App\Core\Responses\ViewResponse
+     */
     public function show(): Response {
         $categoryId = $this->request()->getValue('category');
 
