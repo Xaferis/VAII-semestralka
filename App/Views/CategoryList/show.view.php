@@ -108,9 +108,8 @@ $orderByParam = $data['orderByParam'] ?? "";
                     <div class="col-md-8 category-card">
                         <div class="card-body">
                             <h5 class="card-title single-line"><?php echo $post->getTitle() ?></h5>
-                            <p class="card-text two-line"><?php echo $post->getDescription() ?></p>
+                            <p class="card-text single-line"><?php echo $post->getDescription() ?></p>
                             <h5 class="card-text"><?php echo $post->getPrice() ?>€</h5>
-                            <p class="card-text"><small class="text-muted">Pridane pred 5 dnami</small></p>
                             <a href="?c=postDetail&id=<?php echo $post->getId() ?>" class="btn btn-primary">Zobrazit viac</a>
                         </div>
                     </div>

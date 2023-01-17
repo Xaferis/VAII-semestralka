@@ -38,11 +38,11 @@ if ($user->getImagePath()) {
         <!-- The slideshow/carousel -->
         <div class="carousel-inner">
             <div class="carousel-item text-center active">
-                <img src="<?php echo $images_names[0] ?>">
+                <img src="<?php echo $images_names[0] ?>" alt="">
             </div>
             <?php for($i = 1; $i < count($images_names); $i++) {?>
                 <div class="carousel-item text-center">
-                    <img src="<?php echo $images_names[$i] ?>">
+                    <img src="<?php echo $images_names[$i] ?>" alt="">
                 </div>
             <?php } ?>
         </div>

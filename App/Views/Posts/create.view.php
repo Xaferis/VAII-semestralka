@@ -12,16 +12,16 @@ $post = $data['post'];
 $categories = $data['categories'];
 $first_category = array_values($categories)[0];
 $images = $data['images'] ?? null;
+$validClass = $post->getId() ? "valid" : "invalid";
+$disabledClass = $post->getId() ? "enabled" : "disabled";
 ?>
+
 <div class="container mt-2 inner-container">
     <div class="row>">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div class="card card-signin my-5">
                 <div class="card-body">
-                    <h5 class="card-title text-center"><?= $data['title'] ?></h5>
-                    <div class="text-center text-danger mb-3">
-                        <?= @$data['error_message'] ?>
-                    </div>
+                    <h5 class="card-title text-center pb-3"><?= $data['title'] ?></h5>
                     <form class="needs-validation" method="post" action="?c=posts&a=store" enctype="multipart/form-data" id="post-form" novalidate>
                         <input type="hidden" value="<?= $post->getId() ?>" name="id">
 
@@ -32,13 +32,14 @@ $images = $data['images'] ?? null;
                         } ?>
 
                         <div class="form-floating mb-3">
-                            <input name="title" type="text" id="title" class="form-control" value="<?= $post->getTitle() ?>" required>
+                            <input name="title" type="text" id="title" class="form-control <?= $validClass ?>" value="<?= $post->getTitle() ?>" required onkeyup="checkPostsInputFields('title')">
                             <label for="title">Názov</label>
-                            <div class="invalid-feedback">Nazov nesmie byt prazdny!</div>
+                            <div class="warning-message px-1 pt-1" id="warning_title" hidden>Názov nesmie byť prázdny!</div>
                         </div>
                         <div class="form-floating mb-3">
-                            <textarea type="text" name="description" class="form-control" id="description" rows="3"><?= $post->getDescription() ?></textarea>
+                            <textarea type="text" name="description" class="form-control <?= $validClass ?>" id="description" rows="3" onkeyup="checkPostsInputFields('description')"><?= $post->getDescription() ?></textarea>
                             <label for="description">Popis</label>
+                            <div class="warning-message px-1 pt-1" id="warning_description" hidden>Popis nesmie byť prázdny!</div>
                         </div>
                         <div class="row g-2">
                             <div class="col-md-6">
@@ -73,9 +74,9 @@ $images = $data['images'] ?? null;
                         <div class="row g-2">
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <input name="price" type="text" id="price" class="form-control" value="<?= $post->getPrice() ?>" required>
+                                    <input name="price" type="text" id="price" class="form-control <?= $validClass ?>" value="<?= $post->getPrice() ?>" required onkeyup="checkPostsInputFields('price')">
                                     <label for="price">Suma v €</label>
-                                    <div class="invalid-feedback">Nesprávny formát!</div>
+                                    <div class="warning-message px-1 pt-1" id="warning_price" hidden>Nesprávny formát! Povolené formáty: 123 123.4 123,4</div>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +104,7 @@ $images = $data['images'] ?? null;
                     </div>
 
                     <div class="text-center border-top pt-3">
-                        <button class="btn btn-primary" type="submit" name="submit" form="post-form">
+                        <button class="btn btn-primary" type="submit" name="submit" id="submit_button" form="post-form" <?= $disabledClass ?>>
                             <?= $data['button'] ?>
                         </button>
                     </div>

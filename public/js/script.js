@@ -1,4 +1,4 @@
-function checkRegisterInputFields() {
+function checkRegisterInputFieldsState() {
     let emailInput = document.getElementById("email")
     let usernameInput = document.getElementById("username")
     let passwordInput = document.getElementById("password")
@@ -23,7 +23,7 @@ function checkLoginInputFields() {
     button.disabled = emailInput.value === "" || passwordInput.value === ""
 }
 
-function checkInputField(name) {
+function checkRegisterInputFields(name) {
     let regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
     let regexUsername = /^[a-zA-Z][0-9a-zA-Z_]{2,23}[0-9a-zA-Z]$/
     let regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{8,}$/
@@ -52,7 +52,7 @@ function checkInputField(name) {
         checkPasswords()
     }
 
-    checkRegisterInputFields()
+    checkRegisterInputFieldsState()
 }
 
 function checkPasswords() {
@@ -67,7 +67,37 @@ function checkPasswords() {
         warningMessage.hidden = false
         passwordCheckInput.classList.add("invalid")
     }
-    checkRegisterInputFields()
+    checkRegisterInputFieldsState()
+}
+
+function checkPostsInputFields(name) {
+    let regexPrice = /^\d+((\.|,)\d+)?$/
+
+    let inputElement = document.getElementById(name)
+    let warningMessage = document.getElementById("warning_" + name)
+
+    if((name === 'price' && inputElement.value.match(regexPrice) && inputElement.value !== "0")
+        || (name !== 'price' && inputElement.value.trim().length > 0)) {
+        warningMessage.hidden = true
+        inputElement.classList.remove("invalid")
+    } else {
+        warningMessage.hidden = false
+        inputElement.classList.add("invalid")
+    }
+
+    let titleInput = document.getElementById("title")
+    let descriptionInput = document.getElementById("description")
+    let priceInput = document.getElementById("price")
+    let button = document.getElementById("submit_button")
+    let areValid = true
+
+    Array(titleInput, descriptionInput, priceInput).forEach(element => {
+        if (element.classList.contains("invalid")) {
+            areValid = false
+        }
+    })
+
+    button.disabled = !areValid;
 }
 
 async function updateSubcategories() {

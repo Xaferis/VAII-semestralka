@@ -19,7 +19,7 @@ class Authenticator implements IAuthenticator
         if (count($user) == 0) {
             return false;
         }
-        if ($userLogin == $user[0]->getEmail() && password_verify($pass, $user[0]->getPasswordHash())) {
+        if (strcmp($userLogin, $user[0]->getEmail()) == 0 && password_verify($pass, $user[0]->getPasswordHash())) {
             $_SESSION['user_name'] = $user[0]->getName();
             $_SESSION['user_id'] = $user[0]->getId();
             return true;

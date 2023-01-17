@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Config\Configuration;
 use App\Core\AControllerBase;
 use App\Core\Responses\Response;
+use App\Helpers\Validator;
 use App\Models\User;
 
 /**
@@ -15,7 +16,7 @@ use App\Models\User;
 class AuthController extends AControllerBase
 {
     /**
-     *
+     * Shows the login page
      * @return \App\Core\Responses\RedirectResponse|\App\Core\Responses\Response
      */
     public function index(): Response
@@ -33,18 +34,22 @@ class AuthController extends AControllerBase
             return $this->redirect('?c=home');
         }
         $formData = $this->app->getRequest()->getPost();
-        $logged = null;
+        $isLogged = null;
         if (isset($formData['submit'])) {
-            $logged = $this->app->getAuth()->login($formData['login'], $formData['password']);
-            if ($logged) {
+            $isLogged = $this->app->getAuth()->login($formData['login'], $formData['password']);
+            if ($isLogged) {
                 return $this->redirect('?c=home');
             }
         }
 
-        $data = ($logged === false ? ['message' => 'Zlý login alebo heslo!'] : []);
+        $data = ($isLogged === false ? ['message' => 'Zlý login alebo heslo!', 'isMessageError' => true] : []);
         return $this->html($data);
     }
 
+    /**
+     * Register a user
+     * @return \App\Core\Responses\RedirectResponse|\App\Core\Responses\ViewResponse
+     */
     public function register(): Response
     {
         if ($this->app->getAuth()->isLogged()) {
@@ -53,23 +58,23 @@ class AuthController extends AControllerBase
         $formData = $this->app->getRequest()->getPost();
         if (isset($formData['submit'])) {
             if (!$formData['login'] || !$formData['name'] || !$formData['password'] || !$formData['password_check']) {
-                return $this->html(['message' => 'Jedno alebo viac polia nie su vyplnene!']);
+                return $this->html(['message' => 'Musia byť vyplnené všetky polia!', 'isMessageError' => true]);
             }
             if (!filter_var($formData['login'], FILTER_VALIDATE_EMAIL)) {
-                return $this->html(['message' => 'Nespravny format e-mailu!']);
+                return $this->html(['message' => 'Nesprávny formát e-mailu!', 'isMessageError' => true]);
             }
             $isEmailTaken = User::getAll('email = ?', [$formData['login']]);
             if (count($isEmailTaken) != 0) {
-                return $this->html(['message' => 'Ucet s danym e-mailom uz existuje!']);
+                return $this->html(['message' => 'Účet s daným e-mailom už existuje!', 'isMessageError' => true]);
+            }
+            if (!Validator::validatePassword($formData['password'])) {
+                return $this->html(['message' => 'Heslo musí mať min. 8 znakov, aspoň 1 písmeno a aspoň 1 číslicu!', 'isMessageError' => true]);
             }
             if (strcmp($formData['password'],$formData['password_check']) != 0) {
-                return $this->html(['message' => 'Hesla sa nezhoduju!']);
+                return $this->html(['message' => 'Heslá sa nezhodujú!', 'isMessageError' => true]);
             }
-            if (strlen('password') < 7) {
-                return $this->html(['message' => 'Heslo musi mat aspon 7 znakov!']);
-            }
-            if (strlen($formData['name']) < 3) {
-                return $this->html(['message' => 'Meno musi mat aspon 3 znaky!']);
+            if (!Validator::validateUsername($formData['name'])) {
+                return $this->html(['message' => 'Prezývka musí byť dlhá 4-25 znakov, musí začínať písmenom, povolené sú znaky "a-Z,1-9,_"!', 'isMessageError' => true]);
             }
 
             $user = new User();
@@ -77,7 +82,10 @@ class AuthController extends AControllerBase
             $user->setPasswordHash(password_hash($formData['password'], PASSWORD_DEFAULT));
             $user->setName($formData['name']);
             $user->save();
-            return $this->redirect('?c=auth&a=login');
+            return $this->html([
+                'message' => 'Registrácia prebehla úspešne! Môžete sa teraz prihlásiť',
+                'isMessageError' => false
+            ], 'login');
         }
         return $this->html([]);
     }

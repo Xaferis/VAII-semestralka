@@ -38,8 +38,8 @@ $categories = $data['categories'];
 
                         <img src="<?= $file_path ?>" class="card-img-top fit-cover position-relative w-100 h-100" alt="">
                         <div class="card-body">
-                            <h5 class="card-title"><?= $post->getTitle() ?></h5>
-                            <p class="card-text"><?= $post->getDescription() ?></p>
+                            <h5 class="card-title single-line"><?= $post->getTitle() ?></h5>
+                            <p class="card-text single-line"><?= $post->getDescription() ?></p>
                             <h5 class="card-text"><?= $post->getPrice() ?> €</h5>
                         </div>
                         <div class="card-footer text-center">

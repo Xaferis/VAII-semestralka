@@ -26,7 +26,12 @@ class Validator
         return false;
     }
 
-
+    static function validatePrice($price): bool {
+        if ($price && preg_match('/^\d+((\.|\,)\d+)?$/', $price)) {
+            return true;
+        }
+        return false;
+    }
 
 
 }

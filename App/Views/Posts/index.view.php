@@ -22,8 +22,8 @@ use App\Models\Post;
 
                 <img src="<?php echo $image_path ?>" class="card-img-top fit-cover position-relative w-100 h-100" alt="">
                 <div class="card-body">
-                    <h5 class="card-title"><?php echo $post->getTitle() ?></h5>
-                    <p class="card-text"><?php echo $post->getDescription() ?></p>
+                    <h5 class="card-title single-line"><?php echo $post->getTitle() ?></h5>
+                    <p class="card-text single-line"><?php echo $post->getDescription() ?></p>
                     <h5 class="card-text"><?php echo $post->getPrice() ?> €</h5>
                 </div>
                 <div class="card-footer">
